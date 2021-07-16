@@ -1,0 +1,4 @@
+.vscode
+__pycache__
+website/__pycache__
+website/database.db

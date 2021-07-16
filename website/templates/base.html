@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{{ url_for('static', filename='logo.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/alerts.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/inputs.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/markdown.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+  <script src="https://kit.fontawesome.com/880e1cc2ff.js" crossorigin="anonymous"></script>
+  <title>{% block title %}Home{% endblock %}</title>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">
+      <a href="/">
+        <!--<img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">-->
+        <h4>The Logo</h4>
+      </a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+      {% if user.is_authenticated %}
+      <li><a id="logout" href="/logout">Logout</a></li>
+      {% else %}
+      <li><a href="/login">Login</a></li>
+      <li><a href="/signup">Sign Up</a></li>
+      {% endif %}
+      <li class="nav-search">
+        <form method="post" action="{{ url_for('home.index') }}">
+          <input type="text" name="search" placeholder="Search...">
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+      </li>
+      {% if user.is_authenticated %}
+      <li class="nav-profile">
+        <a href="/{{ user.username }}">
+          <figure><img src="{{ url_for('static', filename='profile_pictures/'+user.profile_pic) }}" alt="Profile"></figure>
+        </a>
+      </li>
+      {% else %}
+      <li class="nav-profile">
+        <a href="/login">
+          <figure><img src="{{ url_for('static', filename='profile_pictures/nobody.png') }}" alt="Profile"></figure>
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+    <div class="nav-collapse">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+  </nav>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert-{{ 'error' if category not in ('error', 'success') else category }}">
+        <span>{{ message }}</span>
+        <button type="button" class="alert-close" onclick="alertClose(this)">
+          <span>&times;</span>
+        </button>
+      </div>
+    {% endfor%}
+  {% endif %}
+  {% endwith %}
+
+  <main>
+    <aside class="first-aside">
+      Sidebar
+    </aside>
+    <div id="content">
+      {% block content %}{% endblock %}
+    </div>
+    <aside>
+      Sidebar
+    </aside>
+  </main>
+
+  <footer>
+    <div class="footer-heading footer-1">
+      <h3>About Us</h3>
+      <a href="">Blog</a>
+      <a href="">Demo</a>
+      <a href="">Customers</a>
+      <a href="">Investors</a>
+      <a href="">Terms of Service</a>
+    </div>
+    <div class="footer-heading footer-2">
+      <h3>Contact Us</h3>
+      <a href="">Jobs</a>
+      <a href="">Support</a>
+      <a href="">Contact</a>
+      <a href="">Sponsorship</a>
+    </div>
+    <div class="footer-heading footer-3">
+      <h3>Social Media</h3>
+      <div>
+        <a href=""><i class="fa fa-instagram"></i> <p>Instagram</p></a>
+        <a href=""><i class="fa fa-facebook-official"></i> <p>Facebook</p></a>
+        <a href=""><i class="fa fa-youtube"></i> <p>Youtube</p></a>
+        <a href=""><i class="fa fa-twitter"></i> <p>Twitter</p></a>
+        <a href=""><i class="fa fa-github"></i> <p>Github</p></a>
+      </div>
+    </div>
+    <div class="footer-email-form">
+      <h2>Join our Newsletter</h2>
+      <input type="email" name="email" id="footer-email" placeholder="Enter your email address">
+      <input type="submit" value="Sign Up" id="footer-email-btn">
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

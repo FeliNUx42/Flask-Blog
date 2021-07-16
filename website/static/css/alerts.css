@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.alert-error, .alert-success {
+  height: 60px;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  border: 2px solid black;
+  border-left: none;
+  border-right: none;
+}
+
+.alert-close {
+  background-color: transparent;
+  border: none;
+  font-size: 2.5em;
+}
+
+.alert-close:hover {
+  cursor: pointer;
+}
+
+.alert-error button {
+  color: #600;
+}
+
+.alert-success button {
+  color: #060;
+}
+
+.alert-error {
+  background-color: #ff000030;
+  border-color: #ff0000;
+}
+
+.alert-success {
+  background-color: #00ff0030;
+  border-color: #00ff00;
+}
+
+.alert-hidden {
+  display: none;
+}

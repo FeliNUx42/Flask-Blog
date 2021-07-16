@@ -1,0 +1,126 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+footer {
+  width: 100%;
+  height: 320px;
+  background-color: #25292e;
+  color: #ddd;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  padding: 4rem 10vw;
+}
+
+footer * {
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-heading, .footer-heading div {
+  display: flex;
+  flex-direction: column;
+  margin-right: 4rem;
+}
+
+.footer-heading h2 {
+  margin-bottom: 2rem;
+}
+
+.footer-heading h3 {
+  margin-bottom: 0.5rem;
+}
+
+.footer-heading a {
+  color: #ddd;
+  text-decoration: none;
+  margin-right: 1rem; 
+  margin-bottom: 0.5rem;
+}
+
+.footer-heading a:hover {
+  color: #fff;
+  transition: 0.3s ease-out;
+}
+
+.footer-heading p {
+  display: inline;
+}
+
+.footer-email-form h2 {
+  margin-bottom: 1.5rem;
+}
+
+#footer-email {
+  width: 250px;
+  height: 40px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  padding-left: 0.5rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+#footer-email::placeholder {
+  color: #888;
+}
+
+#footer-email-btn {
+  width: 100px;
+  height: 40px;
+  border-radius: 4px;
+  background-color: #aaa;
+  outline: none;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+}
+
+#footer-email-btn:hover {
+  cursor: pointer;
+  background-color: skyblue;
+  transition: all 0.4s ease-out;
+}
+
+@media (max-width: 1236px) {
+  footer {
+    height: 450px;
+  }
+  .footer-email-form {
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 814px) {
+  footer {
+    height: 560px;
+  }
+
+  .footer-3 {
+    margin: 0 auto;
+    margin-top: 3rem;
+    width: 100%;
+  }
+
+  .footer-3 p {
+    display: none;
+  }
+
+  .footer-3 h3, .footer-email-form h2 {
+    text-align: center;
+  }
+
+  .footer-3 a {
+    margin: 0 1rem;
+  }
+
+  .footer-3 div {
+    flex-direction: row;
+    justify-content: center;
+    margin-right: 0;
+  }
+}

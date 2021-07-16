@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.markdown *, #content form .markdown h1 {
+  margin: inherit;
+  padding: inherit;
+  text-align: left;
+}
+
+.markdown img {
+  max-width: 100%;
+}
+
+.markdown code {
+  background-color: #ddd;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.markdown pre {
+  background-color: #ddd;
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+
+.markdown pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+}

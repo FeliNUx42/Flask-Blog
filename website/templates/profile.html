@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% block header %}{% endblock %}
+
+<div class="content-profile">
+  <div class="content-profile-top">
+    <figure><img src="{{ url_for('static', filename='profile_pictures/'+author.profile_pic) }}" alt="Profile"></figure>
+    <div>
+      <h1 style="text-align: left;">{{ author.username }}</h1>
+      <p>{{ author.first_name }} {{ author.last_name }}</p>
+    </div>
+    <div class="content-profile-links">
+      {% if author.id == user.id %}
+      <a href="{{ url_for('profile.prof', username=author.username) }}">Posts</a>
+      <a href="{{ url_for('profile.create', username=author.username) }}">Create new Post</a>
+      <a href="{{ url_for('profile.settings', username=author.username)}}">Settings</a>
+      <a href="{{ url_for('profile.deleteacc', username=author.username) }}">Delete Account</a>
+      {% endif %}
+    </div>
+  </div>
+  <hr>
+  <p class="description">{{ author.description }}</p>
+</div>
+
+{% block data %}{% endblock %}
+
+{% endblock %}
