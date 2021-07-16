@@ -1,3 +1,4 @@
+from sqlalchemy.orm import backref
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
@@ -24,7 +25,7 @@ class User(db.Model, UserMixin):
   description = db.Column(db.String(1000), default="No description...")
   profile_pic = db.Column(db.String(128), default="default.png")
   password = db.Column(db.String(128))
-  posts = db.relationship('Posts')
+  posts = db.relationship('Posts', backref="author", lazy=True)
 
   def __repr__(self):
     return f'User({self.email}, {self.first_name}, {self.last_name})'
