@@ -1,6 +1,8 @@
 .vscode
+.env
 __pycache__
 app/__pycache__
 app/database.db
-
-
+app/static/profile_pictures/*
+!app/static/profile_pictures/default.png
+!app/static/profile_pictures/nobody.png
