@@ -1,4 +1,6 @@
 .vscode
 __pycache__
-website/__pycache__
-website/database.db
+app/__pycache__
+app/database.db
+
+
