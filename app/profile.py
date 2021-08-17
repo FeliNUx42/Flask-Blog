@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, abort
 from flask_login import login_required, current_user
 from werkzeug.security import generate_password_hash
-from .models import User, Posts
+from .models import User, Post
 from . import db, valid_type, custom_filename, CONFIG
 import json
 
@@ -9,23 +9,18 @@ profile = Blueprint('profile', __name__)
 
 @profile.route('/<username>', methods=['GET', 'POST'])
 def prof(username):
-  user = User.query.filter_by(username=username).first()
-  
-  if not user:
-    abort(404)
+  user = User.query.filter_by(username=username).first_or_404()
 
-  return render_template("posts.html", user=current_user, author=user)
+  return render_template("Post.html", user=current_user, author=user)
 
 @profile.route('/<username>/settings', methods=['GET', 'POST'])
 @login_required
 def settings(username):
-  user = User.query.filter_by(username=username).first()
-  if not user:
-    abort(404)
-  if user.id != current_user.id:
-    flash('Can\'t view settings of other user.', category='error')
-    return redirect(url_for("profile.prof", username=user.username))
+  user = User.query.filter_by(username=username).first_or_404()
 
+  if user != current_user:
+    abort(403)
+  
   if request.method == 'POST':
     username = request.form.get("username")
     description = request.form.get("description")
@@ -84,12 +79,10 @@ def settings(username):
 @profile.route('/<username>/delete-account')
 @login_required
 def deleteacc(username):
-  user = User.query.filter_by(username=username).first()
-  if not user:
-    abort(404)
-  if user.id != current_user.id:
-    flash('Can\'t delete account of other user.', category='error')
-    return redirect(url_for("profile.prof", username=user.username))
+  user = User.query.filter_by(username=username).first_or_404()
+  
+  if user != current_user:
+    abort(403)
 
   if request.method == 'POST':
     pass
@@ -98,23 +91,18 @@ def deleteacc(username):
 
 @profile.route('/<username>/<title>')
 def post(username, title):
-  user = User.query.filter_by(username=username).first()
-  if not user:
-    abort(404)
-  post = Posts.query.filter_by(title=title, user_id=user.id).first()
-  if not post:
-    abort(404)
+  user = User.query.filter_by(username=username).first_or_404()
+  post = Post.query.filter_by(title=title, user_id=user.id).first_or_404()
+
   return render_template("post.html", user=current_user, author=user, post=post)
 
 @profile.route('/<username>/create', methods=["GET", "POST"])
 @login_required
 def create(username):
-  user = User.query.filter_by(username=username).first()
-  if not user:
-    abort(404)
-  if user.id != current_user.id:
-    flash('Can\'t create post for other user.', category='error')
-    return redirect(url_for("profile.prof", username=user.username))
+  user = User.query.filter_by(username=username).first_or_404()
+  
+  if user != current_user:
+    abort(403)
   
   if request.method == 'POST':
     return "post"
@@ -124,15 +112,12 @@ def create(username):
 @profile.route('/<username>/<titlte>/edit', methods=["GET", "POST"])
 @login_required
 def edit(username, title):
-  user = User.query.filter_by(username=username).first()
-  if not user:
-    abort(404)
-  if user.id != current_user.id:
-    flash('Can\'t edit post of other user.', category='error')
-    return redirect(url_for("profile.prof", username=user.username))
-  post = Posts.query.filter_by(title=title, user_id=user.id).first()
-  if not post:
-    abort(404)
+  user = User.query.filter_by(username=username).first_or_404()
+  
+  if user != current_user:
+    abort(403)
+
+  post = Post.query.filter_by(title=title, user_id=user.id).first_or_404()
   
   if request.method == 'POST':
     pass

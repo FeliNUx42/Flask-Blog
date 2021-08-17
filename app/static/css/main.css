@@ -81,7 +81,7 @@ main {
   color: #888;
 }
 
-.banner {
+.content-profile {
   width: 100%;
   padding: 20px;
   border-radius: 5px;
@@ -89,11 +89,11 @@ main {
   background-color: #eee;
 }
 
-.banner hr {
+.content-profile hr {
   margin: 20px 0;
 }
 
-.banner p {
+.content-profile p {
   color: #888;
 }
 

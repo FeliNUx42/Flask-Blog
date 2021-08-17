@@ -9,7 +9,7 @@ DB_NAME = "database.db"
 
 CONFIG = {
   "SECRET_KEY": "chane this",
-  "UPLOAD_FOLDER" : "website/static/profile_pictures/"
+  "UPLOAD_FOLDER" : "app/static/profile_pictures/"
 }
 
 def create_app():
@@ -19,7 +19,7 @@ def create_app():
   db.init_app(app)
 
   app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-  app.config["UPLOAD_FOLDER"] = "website/static/profile_pic"
+  app.config["UPLOAD_FOLDER"] = "app/static/profile_pic"
 
   from .home import home
   from .auth import auth
@@ -33,7 +33,7 @@ def create_app():
   app.register_blueprint(errors)
   app.register_blueprint(api)
 
-  from .models import User, Posts
+  from .models import User, Post
 
   create_database(app)
 
@@ -66,14 +66,18 @@ def custom_filename(filename):
   _, ext = path.splitext(filename)
   return str(uuid4()) + ext
 
-def valid_username(username):
-  from .models import User, Posts
+def valid_username(username, id=0):
+  from .models import User, Post
   from main import app
 
   user = User.query.filter_by(username=username).first()
   pages = list(app.url_map.iter_rules())
   pages = [p.rule[1:] for p in pages if not p.arguments]
   
-  if user or username in pages or "/" in username:
+  if user and user.id != id:
     return False
+
+  if username in pages or "/" in username:
+    return False
+
   return True
