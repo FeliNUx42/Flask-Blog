@@ -109,7 +109,7 @@ def create(username):
 
   return render_template("create.html", user=current_user, author=current_user)
 
-@profile.route('/<username>/<titlte>/edit', methods=["GET", "POST"])
+@profile.route('/<username>/<title>/edit', methods=["GET", "POST"])
 @login_required
 def edit(username, title):
   user = User.query.filter_by(username=username).first_or_404()
