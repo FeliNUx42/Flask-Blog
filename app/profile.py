@@ -59,7 +59,7 @@ def settings(username):
         elif len(request.form.get("password1")) < 8:
           flash('Password must be greater than 7 characters. Password couldn\'t be updated.', category='error')
         else:
-          user.password = generate_password_hash(request.form.get("password1"), method="sha512")
+          user.password = request.form.get("password1")
       
       f = request.files['profilePic']
       if f.filename:

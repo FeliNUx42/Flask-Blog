@@ -18,16 +18,13 @@ def login():
     password = request.form.get('password')
 
     user = User.query.filter_by(username=username).first()
-    if user:
-      if check_password_hash(user.password, password):
-        login_user(user)
-        flash('Logged in successfully!', category='success')
-        return redirect(url_for("profile.prof", username=user.username))
-      else:
-        flash('Incorrect Username or Password.', category='error')
+    if user and user.verify_password(password):
+      login_user(user)
+      flash('Logged in successfully!', category='success')
+      return redirect(url_for("profile.prof", username=user.username))
     else:
       flash('Incorrect Username or Password.', category='error')
-
+    
   return render_template("login.html", user=current_user)
 
 
@@ -64,7 +61,7 @@ def signup():
     elif len(password1) < 8:
       flash('Password must be greater than 7 characters.', category='error')
     else:
-      new_user = User(email=email, username=username, first_name=firstName, last_name=lastName, password=generate_password_hash(password1, method='sha512'))
+      new_user = User(email=email, username=username, first_name=firstName, last_name=lastName, password=password1)
       db.session.add(new_user)
       db.session.commit()
       flash('Account created!', category='success')
