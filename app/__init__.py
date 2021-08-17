@@ -3,23 +3,29 @@ from flask_sqlalchemy import SQLAlchemy
 from os import path
 from uuid import uuid4
 from flask_login import LoginManager
+from .config import Config
 
 db = SQLAlchemy()
-DB_NAME = "database.db"
 
-CONFIG = {
-  "SECRET_KEY": "chane this",
-  "UPLOAD_FOLDER" : "app/static/profile_pictures/"
-}
+login_manager = LoginManager()
+login_manager.login_view = 'auth.login'
+login_manager.login_message_category = "error"
+@login_manager.user_loader
+def load_user(id):
+  from .models import User
+  return User.query.get(int(id))
+
 
 def create_app():
   app = Flask(__name__)
-  app.config['SECRET_KEY'] = CONFIG["SECRET_KEY"]
-  app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
-  db.init_app(app)
+  app.config.from_object(Config)
 
-  app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-  app.config["UPLOAD_FOLDER"] = "app/static/profile_pic"
+  print(Config.SECRET_KEY)
+
+  db.init_app(app)
+  db.create_all(app=app)
+
+  login_manager.init_app(app)
 
   from .home import home
   from .auth import auth
@@ -33,25 +39,8 @@ def create_app():
   app.register_blueprint(errors)
   app.register_blueprint(api)
 
-  from .models import User, Post
-
-  create_database(app)
-
-  login_manager = LoginManager()
-  login_manager.login_view = 'auth.login'
-  login_manager.login_message_category = "error"
-  login_manager.init_app(app)
-
-  @login_manager.user_loader
-  def load_user(id):
-    return User.query.get(int(id))
-
   return app
 
-def create_database(app):
-  if not path.exists('website/' + DB_NAME):
-    db.create_all(app=app)
-    print('Created database')
 
 def valid_type(filename):
   print(filename)

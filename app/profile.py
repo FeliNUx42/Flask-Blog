@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, flash, jsonify, redirect,
 from flask_login import login_required, current_user
 from werkzeug.security import generate_password_hash
 from .models import User, Post
-from . import db, valid_type, custom_filename, CONFIG
+from . import db, valid_type, custom_filename
 import json
 
 profile = Blueprint('profile', __name__)
@@ -11,7 +11,7 @@ profile = Blueprint('profile', __name__)
 def prof(username):
   user = User.query.filter_by(username=username).first_or_404()
 
-  return render_template("Post.html", user=current_user, author=user)
+  return render_template("posts.html", user=current_user, author=user)
 
 @profile.route('/<username>/settings', methods=['GET', 'POST'])
 @login_required
@@ -67,7 +67,7 @@ def settings(username):
           flash(f"'{f.filename}' is not a valid filetype. Only .png, .jpg and .jpeg are accepted.")
         else:
           filename = custom_filename(f.filename)
-          f.save(CONFIG["UPLOAD_FOLDER"] + filename)
+          f.save(filename)
           user.profile_pic = filename
     
       db.session.commit()
