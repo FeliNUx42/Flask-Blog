@@ -17,6 +17,8 @@ def load_user(id):
 
 
 def create_app():
+  from .models import User, Post
+
   app = Flask(__name__)
   app.config.from_object(Config)
 

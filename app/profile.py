@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, abort
 from flask_login import login_required, current_user
-from werkzeug.security import generate_password_hash
 from .models import User, Post
 from . import db, valid_type, custom_filename
 import json
