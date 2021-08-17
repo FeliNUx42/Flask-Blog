@@ -25,7 +25,7 @@ def login():
     else:
       flash('Incorrect Username or Password.', category='error')
     
-  return render_template("login.html", user=current_user)
+  return render_template("login.html")
 
 
 @auth.route('/signup', methods=['GET', 'POST'])
@@ -69,7 +69,7 @@ def signup():
       return redirect(url_for("profile.prof", username=new_user.username))
 
 
-  return render_template('signup.html', user=current_user)
+  return render_template('signup.html')
 
 @auth.route('/logout', methods=['GET', 'POST'])
 @login_required

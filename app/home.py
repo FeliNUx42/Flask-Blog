@@ -12,5 +12,5 @@ def index():
     search = request.form.get('search')
     return 'error: ' + search
 
-  return render_template("home.html", user=current_user)
+  return render_template("home.html")
 
