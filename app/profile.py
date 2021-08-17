@@ -66,7 +66,7 @@ def settings(username):
       flash('Data updated successfully!', category='success')
       return redirect(url_for("profile.prof", username=user.username))
 
-  return render_template("settings.html")
+  return render_template("settings.html", author=current_user)
 
 @profile.route('/<username>/delete-account')
 @login_required
@@ -79,14 +79,14 @@ def deleteacc(username):
   if request.method == 'POST':
     pass
 
-  return render_template("deleteacc.html")
+  return render_template("deleteacc.html", author=current_user)
 
 @profile.route('/<username>/<title>')
 def post(username, title):
   user = User.query.filter_by(username=username).first_or_404()
   post = Post.query.filter_by(title=title, author=user).first_or_404()
 
-  return render_template("post.html", author=user, post=post)
+  return render_template("post.html",  author=user, post=post)
 
 @profile.route('/<username>/create', methods=["GET", "POST"])
 @login_required
@@ -99,7 +99,7 @@ def create(username):
   if request.method == 'POST':
     return "post"
 
-  return render_template("create.html")
+  return render_template("create.html", author=current_user)
 
 @profile.route('/<username>/<title>/edit', methods=["GET", "POST"])
 @login_required
@@ -114,4 +114,4 @@ def edit(username, title):
   if request.method == 'POST':
     pass
 
-  return render_template("edit.html", post=post)
+  return render_template("edit.html", author=current_user, post=post)
