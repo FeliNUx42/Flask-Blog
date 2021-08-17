@@ -23,22 +23,16 @@ def settings(username):
   if request.method == 'POST':
     username = request.form.get("username")
     description = request.form.get("description")
-    email = request.form.get("email")
     firstName = request.form.get("firstName")
     lastName = request.form.get("lastName")
 
-    user1 = User.query.filter_by(email=email).first()
-    user2 = User.query.filter_by(username=username).first()
+    user1 = User.query.filter_by(username=username).first()
 
     if not description:
       description = "No description..."
 
     if user1 and user1.id != user.id:
       flash('Email already exists.', category='error')
-    elif user2 and user2.id != user.id:
-      flash('Username already exists.', category='error')
-    elif len(email) < 4:
-      flash('Email must be greater than 3 characters.', category='error')
     elif len(username) < 4:
       flash('Username must be greater than 3 characters.', category='error')
     elif len(firstName) < 2:
@@ -48,7 +42,6 @@ def settings(username):
     else:
       user.username = username
       user.description = description
-      user.email = email
       user.first_name = firstName
       user.last_name = lastName
 

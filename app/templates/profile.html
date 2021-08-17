@@ -12,7 +12,7 @@
       <p>{{ author.first_name }} {{ author.last_name }}</p>
     </div>
     <div class="content-profile-links">
-      {% if author == user %}
+      {% if author == current_user %}
       <a href="{{ url_for('profile.prof', username=author.username) }}">Posts</a>
       <a href="{{ url_for('profile.create', username=author.username) }}">Create new Post</a>
       <a href="{{ url_for('profile.settings', username=author.username)}}">Settings</a>

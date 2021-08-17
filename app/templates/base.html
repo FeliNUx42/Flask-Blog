@@ -27,7 +27,7 @@
       <li><a href="/">Home</a></li>
       <li><a href="/about">About</a></li>
       <li><a href="/contact">Contact</a></li>
-      {% if user.is_authenticated %}
+      {% if current_user.is_authenticated %}
       <li><a id="logout" href="/logout">Logout</a></li>
       {% else %}
       <li><a href="/login">Login</a></li>
@@ -39,10 +39,10 @@
           <button type="submit"><i class="fa fa-search"></i></button>
         </form>
       </li>
-      {% if user.is_authenticated %}
+      {% if current_user.is_authenticated %}
       <li class="nav-profile">
-        <a href="/{{ user.username }}">
-          <figure><img src="{{ url_for('static', filename='profile_pictures/'+user.profile_pic) }}" alt="Profile"></figure>
+        <a href="/{{ current_user.username }}">
+          <figure><img src="{{ url_for('static', filename='profile_pictures/'+current_user.profile_pic) }}" alt="Profile"></figure>
         </a>
       </li>
       {% else %}
