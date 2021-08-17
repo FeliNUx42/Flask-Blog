@@ -20,8 +20,6 @@ def create_app():
   app = Flask(__name__)
   app.config.from_object(Config)
 
-  print(Config.SECRET_KEY)
-
   db.init_app(app)
   db.create_all(app=app)
 
