@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
+from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, abort
 from flask_login import login_required, current_user, logout_user, login_user
 from .models import User, Post
 from . import db, valid_username
@@ -21,7 +21,10 @@ def login():
     if user and user.verify_password(password):
       login_user(user)
       flash('Logged in successfully!', category='success')
-      return redirect(url_for("profile.prof", username=user.username))
+
+      next = request.args.get('next')
+
+      return redirect(next or url_for("profile.prof", username=user.username))
     else:
       flash('Incorrect Username or Password.', category='error')
     
