@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, abort
 from flask_login import login_required, current_user
 from .models import User, Post
-from . import db, valid_type, custom_filename
+from . import db, valid_type, custom_filename, valid_username
 import json
 
 profile = Blueprint('profile', __name__)
@@ -26,13 +26,11 @@ def settings(username):
     firstName = request.form.get("firstName")
     lastName = request.form.get("lastName")
 
-    user1 = User.query.filter_by(username=username).first()
-
     if not description:
       description = "No description..."
 
-    if user1 and user1.id != user.id:
-      flash('Email already exists.', category='error')
+    if valid_username(username, user.id):
+      flash('Username already exists.', category='error')
     elif len(username) < 4:
       flash('Username must be greater than 3 characters.', category='error')
     elif len(firstName) < 2:

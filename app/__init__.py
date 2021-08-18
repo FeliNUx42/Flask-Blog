@@ -4,6 +4,7 @@ from os import path
 from uuid import uuid4
 from flask_login import LoginManager
 from .config import Config
+import requests
 
 db = SQLAlchemy()
 
@@ -56,7 +57,7 @@ def custom_filename(filename):
   return str(uuid4()) + ext
 
 def valid_username(username, id=0):
-  from .models import User, Post
+  from .models import User
   from main import app
 
   user = User.query.filter_by(username=username).first()
@@ -70,3 +71,6 @@ def valid_username(username, id=0):
     return False
 
   return True
+
+def markdown(text):
+  return requests.post("https://api.github.com/markdown", json={"text":text}).text

@@ -55,19 +55,22 @@ function changeMode(element) {
 
   buttons.forEach(button => button.classList.toggle("toggle-active"));
 
-  if (preview.classList.contains("mode-inactve")) {
+  inputs.classList.toggle("mode-inactive");
+  preview.classList.toggle("mode-inactive");
+
+  if (preview.classList.contains("mode-inactive")) {
     preview.innerHTML = "";
   } else {
     let req = new XMLHttpRequest();
     let url = "/markdown";
-    let param = "data=" + document.querySelector("#data").value;
+    let param = "data=" + document.querySelector("#data").value.replaceAll("&", "%26");
 
     req.onreadystatechange = () => {
       if (req.readyState == 4 && req.status == 200) {
         let title = document.querySelector("#title").value;
         let description = document.querySelector("#description").value;
         let banner = `<div class="banner"><h1>${title}</h1><hr><p>${description}</p></div>`
-        preview.innerHTML = banner + '<div class="markdown">' + req.responseText + '</div>';
+        preview.innerHTML = banner + '<div class="markdown-body">' + req.responseText + '</div>';
       }
     }
 
@@ -75,7 +78,4 @@ function changeMode(element) {
     req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     req.send(param);
   }
-
-  inputs.classList.toggle("mode-inactive");
-  preview.classList.toggle("mode-inactive");
 }

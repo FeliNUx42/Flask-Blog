@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_login import login_required, current_user, logout_user, login_user
 from .models import User, Post
-from . import db
+from . import db, valid_username
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -43,10 +43,9 @@ def signup():
     password2 = request.form.get('password2')
 
     user1 = User.query.filter_by(email=email).first()
-    user2 = User.query.filter_by(username=username).first()
     if user1:
       flash('Email already exists.', category='error')
-    elif user2:
+    elif not valid_username(username):
       flash('Username already exists.', category='error')
     elif len(email) < 4:
       flash('Email must be greater than 3 characters.', category='error')
