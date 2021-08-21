@@ -40,10 +40,14 @@ def signup():
   if request.method == 'POST':
     email = request.form.get('email')
     username = request.form.get('username')
+    description = request.form.get('description')
     firstName = request.form.get('firstName')
     lastName = request.form.get('lastName')
     password1 = request.form.get('password1')
     password2 = request.form.get('password2')
+
+    if not description:
+      description = "No description..."
 
     user1 = User.query.filter_by(email=email).first()
     if user1:
@@ -51,19 +55,19 @@ def signup():
     elif not valid_username(username):
       flash('Username already exists.', category='error')
     elif len(email) < 4:
-      flash('Email must be greater than 3 characters.', category='error')
+      flash('Email must be longer than 3 characters.', category='error')
     elif len(username) < 4:
-      flash('Username must be greater than 3 characters.', category='error')
+      flash('Username must be longer than 3 characters.', category='error')
     elif len(firstName) < 2:
-      flash('First Name must be greater than 1 characters.', category='error')
+      flash('First Name must be longer than 1 characters.', category='error')
     elif len(lastName) < 2:
-      flash('Last Name must be greater than 1 characters.', category='error')
+      flash('Last Name must be longer than 1 characters.', category='error')
     elif password1 != password2:
       flash('Passwords don\'t match.', category='error')
     elif len(password1) < 8:
-      flash('Password must be greater than 7 characters.', category='error')
+      flash('Password must be longer than 7 characters.', category='error')
     else:
-      new_user = User(email=email, username=username, first_name=firstName, last_name=lastName, password=password1)
+      new_user = User(email=email, username=username, description=description, first_name=firstName, last_name=lastName, password=password1)
       db.session.add(new_user)
       db.session.commit()
       flash('Account created!', category='success')

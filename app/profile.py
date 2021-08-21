@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, abort
 from flask_login import login_required, current_user, fresh_login_required
 from .models import User, Post
-from . import db, valid_type, custom_filename, valid_username
+from . import db, valid_type, custom_filename, valid_username, valid_title
 import json
 
 profile = Blueprint('profile', __name__)
@@ -95,7 +95,26 @@ def create(username):
     abort(403)
   
   if request.method == 'POST':
-    return "post"
+    title = request.form.get('title')
+    description = request.form.get('description')
+    content = request.form.get('content')
+
+    if not description:
+      description = "No description..."
+
+    if not valid_title(title):
+      flash('Title already exists.', category='error')
+    elif len(description) < 4:
+      flash('Description must be longer than 3 characters.', category='error')
+    elif len(content) < 10:
+      flash('ontent must be longer than 10 characters.', category='error')
+    else:
+      new_post = Post(title=title, description=description, content=content, author=user)
+      db.session.add(new_post)
+      db.session.commit()
+      flash('Post created!', category='success')
+      return redirect(url_for("profile.post", username=user.username, title=title))
+
 
   return render_template("create_edit.html", creating=True, author=current_user)
 
