@@ -159,6 +159,13 @@ def delete(username, title):
   post = Post.query.filter_by(title=title, author=user).first_or_404()
   
   if request.method == 'POST':
-    pass
+    delete = request.form.get('yes')
+    if delete is None:
+      return redirect(url_for("profile.post", username=user.username, title=post.title))
+    
+    db.session.delete(post)
+    db.session.commit()
+    flash('Post deleted successfully!', category='success')
+    return redirect(url_for('profile.prof', username=user.username))
 
   return render_template("delete.html", author=current_user, post=post)

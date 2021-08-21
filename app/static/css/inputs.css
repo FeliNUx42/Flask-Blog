@@ -9,6 +9,10 @@ h1:not(.markdown-body h1) {
   margin-bottom: 1rem;
 }
 
+h1.danger {
+  color: #800;
+}
+
 #content form label {
   display: block;
   margin-bottom: 5px;
@@ -73,6 +77,10 @@ h1:not(.markdown-body h1) {
 
 #content form button:hover {
   background-color: #0069d9;
+}
+
+#content form button.danger{
+  background-color: #b00;
 }
 
 #change-pwd {
