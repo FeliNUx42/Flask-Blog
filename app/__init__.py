@@ -71,13 +71,34 @@ def valid_username(username, id=0):
 
   user = User.query.filter_by(username=username).first()
   pages = list(app.url_map.iter_rules())
-  pages = [p.rule[1:] for p in pages if not p.arguments]
+  _pages = [p.rule.split("/")[-1] for p in pages if not p.arguments]
   
   if user and user.id != id:
     return False
 
-  if username in pages or "/" in username:
+  if username in _pages or "/" in username:
     return False
+
+  return True
+
+def valid_title(title, id=0):
+  from .models import Post
+  from main import app
+
+  post = Post.query.filter_by(title=title).first()
+  pages = list(app.url_map.iter_rules())
+  _pages = ["/"+p.rule.split("/")[-1] for p in pages if p.arguments == {'username'} and p.endpoint != 'profile.prof']
+  pages_ = ["/"+p.rule.split("/")[-1]  for p in pages if p.arguments == {"username", "title"} and p.endpoint != 'profile.post']
+  
+  if post and post.id != id:
+    return False
+
+  if title in _pages:
+    return False
+  
+  for node in pages_:
+    if node in title:
+      return False
 
   return True
 
