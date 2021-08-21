@@ -107,7 +107,7 @@ def create(username):
     elif len(description) < 4:
       flash('Description must be longer than 3 characters.', category='error')
     elif len(data) < 10:
-      flash('ontent must be longer than 10 characters.', category='error')
+      flash('Content must be longer than 10 characters.', category='error')
     else:
       new_post = Post(title=title, description=description, content=data, author=user)
       db.session.add(new_post)
@@ -138,7 +138,7 @@ def edit(username, title):
     if len(description) < 4:
       flash('Description must be longer than 3 characters.', category='error')
     elif len(data) < 10:
-      flash('ontent must be longer than 10 characters.', category='error')
+      flash('Content must be longer than 10 characters.', category='error')
     else:
       post.description = description
       post.content = data
