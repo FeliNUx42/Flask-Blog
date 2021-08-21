@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, abort
-from flask_login import login_required, current_user
+from flask_login import login_required, current_user, fresh_login_required
 from .models import User, Post
 from . import db, valid_type, custom_filename, valid_username
 import json
@@ -13,7 +13,7 @@ def prof(username):
   return render_template("posts.html", author=user)
 
 @profile.route('/<username>/settings', methods=['GET', 'POST'])
-@login_required
+@fresh_login_required
 def settings(username):
   user = User.query.filter_by(username=username).first_or_404()
 

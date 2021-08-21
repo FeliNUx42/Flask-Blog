@@ -9,7 +9,7 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-  if current_user.is_authenticated:
+  if current_user.is_authenticated and not request.args.get("reauth"):
     flash('You are already logged in.', category='error')
     return redirect(url_for('home.index'))
 
@@ -19,7 +19,7 @@ def login():
 
     user = User.query.filter_by(username=username).first()
     if user and user.verify_password(password):
-      login_user(user)
+      login_user(user, remember=True)
       flash('Logged in successfully!', category='success')
 
       next = request.args.get('next')

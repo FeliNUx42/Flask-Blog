@@ -11,6 +11,9 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 login_manager.login_message_category = "error"
+login_manager.refresh_view = "/login?reauth=1"
+login_manager.needs_refresh_message_category = "error"
+
 @login_manager.user_loader
 def load_user(id):
   from .models import User
