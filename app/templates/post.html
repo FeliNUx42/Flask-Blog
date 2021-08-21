@@ -1,6 +1,24 @@
 {% extends "profile.html" %}
 
-{% block title %}{{ post.title }} - {{ current_user.username }}{% endblock %}
+{% block title %}{{ post.title }} - {{ author.username }}{% endblock %}
 
 {% block data %}
+<div class="post-banner">
+  <div class="post-banner-top">
+    <h1>{{ post.title }}</h1>
+    <div class="post-banner-links">
+      {% if author != current_user %}
+      <figure><img src="{{ url_for('static', filename='profile_pictures/'+author.profile_pic) }}" alt="Profile"></figure>
+      <p>{{ author.username }}</p>
+      {% else %}
+      <a href="{{ url_for('profile.prof', username=author.username) }}">Posts</a>
+      {% endif %}
+    </div>
+  </div>
+  <hr>
+  <p class="post-banner-description">{{ post.description }}</p>
+</div>
+<div class="markdown-body">
+  {{ markdown(post.content) | safe }}
+</div>
 {% endblock %}

@@ -4,14 +4,14 @@
 
 {% block header %}{% endblock %}
 
-<div class="content-profile">
-  <div class="content-profile-top">
+<div class="profile-banner">
+  <div class="profile-banner-top">
     <figure><img src="{{ url_for('static', filename='profile_pictures/'+author.profile_pic) }}" alt="Profile"></figure>
     <div>
       <h1>{{ author.username }}</h1>
       <p>{{ author.first_name }} {{ author.last_name }}</p>
     </div>
-    <div class="content-profile-links">
+    <div class="profile-banner-links">
       {% if author == current_user %}
       <a href="{{ url_for('profile.prof', username=author.username) }}">Posts</a>
       <a href="{{ url_for('profile.create', username=author.username) }}">Create new Post</a>
@@ -21,7 +21,7 @@
     </div>
   </div>
   <hr>
-  <p class="description">{{ author.description }}</p>
+  <p class="profile-banner-description">{{ author.description }}</p>
 </div>
 
 {% block data %}{% endblock %}

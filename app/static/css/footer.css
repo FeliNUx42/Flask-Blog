@@ -86,7 +86,7 @@ footer * {
   transition: all 0.4s ease-out;
 }
 
-@media (max-width: 1236px) {
+@media (max-width: 1251px) {
   footer {
     height: 450px;
   }
