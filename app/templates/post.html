@@ -11,7 +11,8 @@
       <figure><img src="{{ url_for('static', filename='profile_pictures/'+author.profile_pic) }}" alt="Profile"></figure>
       <p>{{ author.username }}</p>
       {% else %}
-      <a href="{{ url_for('profile.prof', username=author.username) }}">Posts</a>
+      <a href="{{ url_for('profile.edit', username=author.username, title=post.title) }}">Edit</a>
+      <a href="{{ url_for('profile.delete', username=author.username, title=post.title) }}">Delete</a>
       {% endif %}
     </div>
   </div>

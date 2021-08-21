@@ -113,3 +113,18 @@ def edit(username, title):
     pass
 
   return render_template("create_edit.html", creating=False, author=current_user, post=post)
+
+@profile.route('/<username>/<title>/delete', methods=["GET", "POST"])
+@login_required
+def delete(username, title):
+  user = User.query.filter_by(username=username).first_or_404()
+  
+  if user != current_user:
+    abort(403)
+
+  post = Post.query.filter_by(title=title, author=user).first_or_404()
+  
+  if request.method == 'POST':
+    pass
+
+  return render_template("delete.html", author=current_user, post=post)
