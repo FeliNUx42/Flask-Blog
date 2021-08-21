@@ -97,7 +97,7 @@ def create(username):
   if request.method == 'POST':
     return "post"
 
-  return render_template("create.html", author=current_user)
+  return render_template("create_edit.html", creating=True, author=current_user)
 
 @profile.route('/<username>/<title>/edit', methods=["GET", "POST"])
 @login_required
@@ -112,4 +112,4 @@ def edit(username, title):
   if request.method == 'POST':
     pass
 
-  return render_template("edit.html", author=current_user, post=post)
+  return render_template("create_edit.html", creating=False, author=current_user, post=post)

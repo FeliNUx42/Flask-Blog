@@ -13,10 +13,12 @@
     <button type="button" class="" onclick="changeMode(this)">Preview</button>
   </div>
   <div class="create-inputs">
+    {% if creating %}
     <div>
       <label for="title">Title</label>
       <input type="text" name="title" id="title">
     </div>
+    {% endif %}
     <div>
       <label for="description">Description</label>
       <textarea name="description" id="description"></textarea>
@@ -27,6 +29,10 @@
     </div>
   </div>
   <div class="create-preview mode-inactive"></div>
+  {% if creating %}
   <button type="submit">Create</button>
+  {% else %}
+  <button type="submit">Create</button>
+  {% endif %}
 </form>
 {% endblock %}
