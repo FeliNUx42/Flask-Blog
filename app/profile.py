@@ -97,7 +97,7 @@ def create(username):
   if request.method == 'POST':
     title = request.form.get('title')
     description = request.form.get('description')
-    content = request.form.get('content')
+    data = request.form.get('data')
 
     if not description:
       description = "No description..."
@@ -106,17 +106,17 @@ def create(username):
       flash('Title already exists.', category='error')
     elif len(description) < 4:
       flash('Description must be longer than 3 characters.', category='error')
-    elif len(content) < 10:
+    elif len(data) < 10:
       flash('ontent must be longer than 10 characters.', category='error')
     else:
-      new_post = Post(title=title, description=description, content=content, author=user)
+      new_post = Post(title=title, description=description, content=data, author=user)
       db.session.add(new_post)
       db.session.commit()
       flash('Post created!', category='success')
       return redirect(url_for("profile.post", username=user.username, title=title))
 
 
-  return render_template("create_edit.html", creating=True, author=current_user)
+  return render_template("create.html", author=current_user)
 
 @profile.route('/<username>/<title>/edit', methods=["GET", "POST"])
 @login_required
@@ -129,9 +129,24 @@ def edit(username, title):
   post = Post.query.filter_by(title=title, author=user).first_or_404()
   
   if request.method == 'POST':
-    pass
+    description = request.form.get('description')
+    data = request.form.get('data')
 
-  return render_template("create_edit.html", creating=False, author=current_user, post=post)
+    if not description:
+      description = "No description..."
+
+    if len(description) < 4:
+      flash('Description must be longer than 3 characters.', category='error')
+    elif len(data) < 10:
+      flash('ontent must be longer than 10 characters.', category='error')
+    else:
+      post.description = description
+      post.content = data
+      db.session.commit()
+      flash('Post edited!', category='success')
+      return redirect(url_for("profile.post", username=user.username, title=title))
+
+  return render_template("edit.html", author=current_user, post=post)
 
 @profile.route('/<username>/<title>/delete', methods=["GET", "POST"])
 @login_required

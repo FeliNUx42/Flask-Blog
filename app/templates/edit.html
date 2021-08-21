@@ -1,0 +1,27 @@
+% extends "profile.html" %}
+
+{% block title %}Create - {{ current_user.username }}{% endblock %}
+
+{% block data %}
+<h1>Editing Post</h1>
+
+<form method="POST">
+  <div class="create-toggle">
+    <button type="button" class="toggle-active" onclick="changeMode(this)">Raw</button>
+    <button type="button" class="" onclick="changeMode(this)">Preview</button>
+  </div>
+  <div class="create-inputs">
+    <input hidden type="text" name="title" id="title" value="{{ post.title }}">
+    <div>
+      <label for="description">Description</label>
+      <textarea name="description" id="description">{{ post.description }}</textarea>
+    </div>
+    <div>
+      <label for="data">Content (<a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a>)</label>
+      <textarea name="data" id="data" onkeydown="autoGrow(this)">{{ post.content }}</textarea>
+    </div>
+  </div>
+  <div class="create-preview mode-inactive"></div>
+  <button type="submit">Edit</button>
+</form>
+{% endblock %}

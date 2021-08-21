@@ -69,7 +69,7 @@ function changeMode(element) {
       if (req.readyState == 4 && req.status == 200) {
         let title = document.querySelector("#title").value;
         let description = document.querySelector("#description").value;
-        let banner = `<div class="banner"><h1>${title}</h1><hr><p>${description}</p></div>`
+        let banner = `<div class="post-banner"><div class="post-banner-top"><h1>${title}</h1></div><hr><p class "post-banner-description">${description}</p></div>`
         preview.innerHTML = banner + '<div class="markdown-body">' + req.responseText + '</div>';
       }
     }
