@@ -29,7 +29,7 @@ def settings(username):
     if not description:
       description = "No description..."
 
-    if valid_username(username, user.id):
+    if not valid_username(username, user.id):
       flash('Username already exists.', category='error')
     elif len(username) < 4:
       flash('Username must be greater than 3 characters.', category='error')
