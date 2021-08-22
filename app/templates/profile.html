@@ -34,12 +34,12 @@
   <div class="post-banner-top">
     <h1>{{ post.title }}</h1>
     <div class="post-banner-links">
-      {% if author != current_user %}
-      <figure><img src="{{ url_for('static', filename='profile_pictures/'+author.profile_pic) }}" alt="Profile"></figure>
-      <p>{{ author.username }}</p>
+      {% if post.author != current_user %}
+      <figure><img src="{{ url_for('static', filename='profile_pictures/'+post.author.profile_pic) }}" alt="Profile"></figure>
+      <p>{{ post.author.username }}</p>
       {% else %}
-      <a href="{{ url_for('post.edit', username=author.username, title=post.title) }}">Edit</a>
-      <a href="{{ url_for('post.delete', username=author.username, title=post.title) }}">Delete</a>
+      <a href="{{ url_for('post.edit', username=post.author.username, title=post.title) }}">Edit</a>
+      <a href="{{ url_for('post.delete', username=post.author.username, title=post.title) }}">Delete</a>
       {% endif %}
     </div>
   </div>
