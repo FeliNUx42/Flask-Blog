@@ -11,14 +11,20 @@
   font-family: 'Poppins', sans-serif;
   letter-spacing: 2px;
   font-size: 14px;
-  padding-bottom: 10px;
   margin-bottom: 30px;
 }
 
 .sidebar h1 {
   background-color: #ccc;
   border-radius: 5px 5px 0 0;
+  font-size: 18px;
+  padding: 3px 0;
 }
+
+.search-bar {
+  padding-bottom: 10px;
+}
+
 .search-bar form div {
   width: 85%;
   margin: 0 auto;
@@ -32,7 +38,7 @@
 .search-bar input[type="text"] {
   height: 30px;
   padding: 0 10px;
-  border: 1px solid #888;
+  border: 1px solid #666;
   border-radius: 3px;
   width: 100%;
 }
@@ -41,7 +47,7 @@
   flex: 1;
   height: 30px;
   border-radius: 3px;
-  border: 1px solid #888;
+  border: 1px solid #666;
   background-color: #fff;
 }
 
@@ -50,7 +56,7 @@
   width: 60px;
   padding-left: 10px;
   border-radius: 3px;
-  border: 1px solid #888;
+  border: 1px solid #666;
   background-color: #fff;
 }
 
@@ -68,7 +74,7 @@
 }
 
 .profile-bar {
-  min-height: 50vh;
+  min-height: 30vh;
 }
 
 .profile-bar .center-item {
@@ -79,4 +85,29 @@
 .profile-bar .center-item a {
   color: #666;
   font-size: 16px;
+}
+
+.profile-bar h1 {
+  margin-bottom: 0px !important;
+}
+
+.profile-bar a {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding-left: 10%;
+  text-decoration: none;
+  width: 100%;
+  height: 40px;
+  font-size: 14px;
+  border-bottom: 1px solid #999;
+  color: #666;
+}
+
+.profile-bar a:last-child {
+  border-bottom: none;
+}
+
+.profile-bar a:hover{
+  background-color: #d8d8d8;
 }
