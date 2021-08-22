@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/alerts.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/inputs.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/banner.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
@@ -82,7 +83,36 @@
       {% block content %}{% endblock %}
     </div>
     <aside>
-      Sidebar
+      <div class="search-bar sidebar">
+        <h1>Search</h1>
+        <form method="post" action="{{ url_for('home.index') }}">
+          <div>
+            <input type="text" name="search" placeholder="Search...">
+            <button type="submit"><i class="fa fa-search"></i></button>
+          </div>
+          <div>
+            <select name="" id="">
+              <option value=""></option>
+              <option value=""></option>
+            </select>
+          </div>
+          <div>
+            <input type="number">
+          </div>
+          <div>
+            <button type="submit">Search</button>
+          </div>
+        </form>
+      </div>
+      <div class="profile-bar sidebar">
+        <h1>Profile</h1>
+        {% if not current_user.is_authenticated %}
+        <div class="center-item">
+          <a href="{{ url_for('auth.signup') }}">Sign Up</a>
+        </div>
+        {% else %}
+        {% endif %}
+      </div>
     </aside>
   </main>
 

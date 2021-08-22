@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.sidebar {
+  background-color: #ddd;
+  width: 100%;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 2px;
+  font-size: 14px;
+}
+
+.sidebar h1 {
+  background-color: #ccc;
+  border-radius: 5px 5px 0 0;
+}
+
+.profile-bar {
+  min-height: 60vh;
+}
+
+.profile-bar .center-item {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.profile-bar .center-item a {
+  color: #666;
+  font-size: 16px;
+}
