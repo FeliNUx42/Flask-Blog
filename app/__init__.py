@@ -68,7 +68,7 @@ def valid_type(filename):
 
 def custom_filename(filename):
   _, ext = path.splitext(filename)
-  return str(uuid4()) + ext
+  return uuid4().hex + ext
 
 def valid_username(username, id=0):
   from .models import User

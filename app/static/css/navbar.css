@@ -21,6 +21,9 @@ nav {
   text-transform: uppercase;
   letter-spacing: 5px;
   font-size: 22px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .nav-logo img {

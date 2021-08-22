@@ -92,7 +92,7 @@ def send_reset_email(user):
   
   token = user.get_token(command="reset-password")
   
-  msg = Message("Password Reset Request", sender="noreply@demo.com", recipients=[user.email])
+  msg = Message("Password Reset Request", sender="noreply@blogopedia.com", recipients=[user.email])
   msg.body = f"""To reset your password, please visit the following link:
 { url_for('auth.reset_token', token=token, _external=True) }
 
