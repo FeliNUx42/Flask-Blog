@@ -88,16 +88,17 @@
         <form method="post" action="{{ url_for('home.index') }}">
           <div>
             <input type="text" name="search" placeholder="Search...">
-            <button type="submit"><i class="fa fa-search"></i></button>
           </div>
           <div>
-            <select name="" id="">
-              <option value=""></option>
-              <option value=""></option>
+            <label for="order">Order by: </label>
+            <select name="order" id="order">
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
             </select>
           </div>
           <div>
-            <input type="number">
+            <label for="per-page" id="label-per-page">Results per page: </label>
+            <input type="number" name="per-page" id="per-page" min="5" max="50" value="20">
           </div>
           <div>
             <button type="submit">Search</button>
