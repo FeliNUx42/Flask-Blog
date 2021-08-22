@@ -45,12 +45,14 @@ def create_app():
   from .home import home
   from .auth import auth
   from .profile import profile
+  from .post import post
   from .errors import errors
   from .api import api
 
   app.register_blueprint(home)
   app.register_blueprint(auth)
   app.register_blueprint(profile)
+  app.register_blueprint(post)
   app.register_blueprint(errors)
   app.register_blueprint(api)
 
@@ -93,7 +95,7 @@ def valid_title(title, id=0):
   post = Post.query.filter_by(title=title).first()
   pages = list(app.url_map.iter_rules())
   _pages = ["/"+p.rule.split("/")[-1] for p in pages if p.arguments == {'username'} and p.endpoint != 'profile.prof']
-  pages_ = ["/"+p.rule.split("/")[-1]  for p in pages if p.arguments == {"username", "title"} and p.endpoint != 'profile.post']
+  pages_ = ["/"+p.rule.split("/")[-1]  for p in pages if p.arguments == {"username", "title"} and p.endpoint != 'post.pst']
   
   if post and post.id != id:
     return False

@@ -117,7 +117,7 @@
         <a href="">Followers (...)</a>
         <a href="">Following (...)</a>
         <a href="">Liked Posts</a>
-        <a href="{{ url_for('profile.create', username=current_user.username) }}">Create Post</a>
+        <a href="{{ url_for('post.create', username=current_user.username) }}">Create Post</a>
         <a href="{{ url_for('auth.logout') }}">Logout</a>
         <a href="{{ url_for('profile.deleteacc', username=current_user.username) }}">Delete Account</a>
         {% endif %}
