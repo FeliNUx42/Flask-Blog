@@ -32,7 +32,8 @@ def create_app():
   @app.context_processor
   def globals():
     return {
-      "markdown": markdown
+      "markdown": markdown,
+      "len": len
     }
 
   db.init_app(app)

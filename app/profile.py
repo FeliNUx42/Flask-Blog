@@ -8,8 +8,12 @@ profile = Blueprint('profile', __name__)
 
 @profile.route('/<username>', methods=['GET', 'POST'])
 def prof(username):
+  from main import app
+  page = request.args.get('page', 1, type=int)
+
   user = User.query.filter_by(username=username).first_or_404()
-  posts = Post.query.filter_by(author=user).order_by(Post.created.desc()).all()
+  posts = Post.query.filter_by(author=user).order_by(Post.created.desc())\
+    .paginate(page, app.config["POSTS_PER_PAGE"], True)
 
   return render_template("profile.html", author=user, posts=posts)
 

@@ -1,0 +1,33 @@
+.pagination {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  border: 1px solid #666;
+  border-radius: 3px;
+  color: #666;
+  background-color: #ddd;
+  text-decoration: none;
+  margin: 0 5px;
+  transition: .2s all;
+}
+
+.pagination-link:hover {
+  height: 40px;
+  width: 40px;
+}
+
+.current-page {
+  background-color: #343a40;
+  border-color: #343a40;
+  color: #ddd;
+}

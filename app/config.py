@@ -5,6 +5,7 @@ class Config:
   SECRET_KEY = os.environ.get("SECRET_KEY", "922c979c6f04da99b5ad58642f5e2ec1")
   PROFILE_PICTURE_FOLDER = "app/static/profile_pictures/"
   MAX_CONTENT_LENGTH = 16 * 1024 * 1024
+  POSTS_PER_PAGE = 3
 
   SQLALCHEMY_DATABASE_URI = f'sqlite:///database.db'
   SQLALCHEMY_TRACK_MODIFICATIONS = False

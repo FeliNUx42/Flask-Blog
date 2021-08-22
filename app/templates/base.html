@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/inputs.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/banner.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/pagination.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
@@ -36,7 +37,7 @@
       <li><a href="/signup">Sign Up</a></li>
       {% endif %}
       <li class="nav-search">
-        <form method="post" action="{{ url_for('home.index') }}">
+        <form method="GET" action="{{ url_for('home.index') }}">
           <input type="text" name="search" placeholder="Search...">
           <button type="submit"><i class="fa fa-search"></i></button>
         </form>
@@ -85,7 +86,7 @@
     <aside>
       <div class="search-bar sidebar">
         <h1>Search</h1>
-        <form method="post" action="{{ url_for('home.index') }}">
+        <form method="GET" action="{{ url_for('home.index') }}">
           <div>
             <input type="text" name="search" placeholder="Search...">
           </div>
@@ -98,7 +99,7 @@
           </div>
           <div>
             <label for="per-page" id="label-per-page">Results per page: </label>
-            <input type="number" name="per-page" id="per-page" min="5" max="50" value="20">
+            <input type="number" name="per-page" id="per-page" min="3" max="30" value="10">
           </div>
           <div>
             <button type="submit">Search</button>
