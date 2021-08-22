@@ -109,7 +109,7 @@
         <h1>Profile</h1>
         {% if not current_user.is_authenticated %}
         <div class="center-item">
-          <a href="{{ url_for('auth.signup') }}">Sign Up</a>
+          <a href="{{ url_for('auth.login') }}">Log In</a>
         </div>
         {% else %}
         <a href="{{ url_for('profile.prof', username=current_user.username) }}">Profile Page</a>

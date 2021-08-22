@@ -91,7 +91,7 @@
   margin-bottom: 0px !important;
 }
 
-.profile-bar a {
+.profile-bar a:not(.center-item a) {
   display: flex;
   justify-content: left;
   align-items: center;
@@ -104,10 +104,10 @@
   color: #666;
 }
 
-.profile-bar a:last-child {
+.profile-bar a:last-child:not(.center-item a) {
   border-bottom: none;
 }
 
-.profile-bar a:hover{
+.profile-bar a:hover:not(.center-item a){
   background-color: #d8d8d8;
 }

@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+.uc-link {
+  text-decoration: none;
+  color: inherit;
+}
+
 .profile-banner {
   width: 100%;
   padding: 20px;

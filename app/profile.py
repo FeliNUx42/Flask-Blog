@@ -9,8 +9,9 @@ profile = Blueprint('profile', __name__)
 @profile.route('/<username>', methods=['GET', 'POST'])
 def prof(username):
   user = User.query.filter_by(username=username).first_or_404()
+  posts = Post.query.filter_by(author=user).order_by(Post.created.desc()).all()
 
-  return render_template("profile.html", author=user)
+  return render_template("profile.html", author=user, posts=posts)
 
 @profile.route('/<username>/settings', methods=['GET', 'POST'])
 @fresh_login_required

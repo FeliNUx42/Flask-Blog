@@ -22,6 +22,30 @@
   <p class="profile-banner-description">{{ author.description }}</p>
 </div>
 
-{% block data %}{% endblock %}
+{% block data %}
+{% for post in posts: %}
+<div
+  class="post-banner"
+  style="cursor: pointer;"
+  onclick="window.location = `{{ url_for('post.pst', username=post.author.username, title=post.title)}}`"
+  tabindex="1"
+>lolo
+  <div class="post-banner-top">
+    <h1>{{ post.title }}</h1>
+    <div class="post-banner-links">
+      {% if author != current_user %}
+      <figure><img src="{{ url_for('static', filename='profile_pictures/'+author.profile_pic) }}" alt="Profile"></figure>
+      <p>{{ author.username }}</p>
+      {% else %}
+      <a href="{{ url_for('post.edit', username=author.username, title=post.title) }}">Edit</a>
+      <a href="{{ url_for('post.delete', username=author.username, title=post.title) }}">Delete</a>
+      {% endif %}
+    </div>
+  </div>
+  <hr>
+  <p class="post-banner-description">{{ post.description }}</p>
+</div>
+{% endfor %}
+{% endblock %}
 
 {% endblock %}
