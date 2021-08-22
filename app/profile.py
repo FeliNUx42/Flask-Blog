@@ -56,8 +56,9 @@ def settings(username):
         if not valid_type(f.filename):
           flash(f"'{f.filename}' is not a valid filetype. Only .png, .jpg and .jpeg are accepted.")
         else:
+          from main import app
           filename = custom_filename(f.filename)
-          f.save(filename)
+          f.save(app.config['PROFILE_PICTURE_FOLDER'] + filename)
           user.profile_pic = filename
     
       db.session.commit()
