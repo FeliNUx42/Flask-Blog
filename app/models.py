@@ -3,6 +3,7 @@ from sqlalchemy.orm import backref
 from . import db
 from flask_login import UserMixin
 from datetime import datetime
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 
 class Post(db.Model):
@@ -38,6 +39,22 @@ class User(db.Model, UserMixin):
   
   def verify_password(self, password):
     return check_password_hash(self.password_hash, password)
+  
+  def get_token(self, command, expire_sec=1800):
+    from main import app
+    s = Serializer(app.config['SECRET_KEY'], expire_sec)
+    return s.dumps({'user_id': self.id, 'command': command}).decode('utf-8')
+  
+  @staticmethod
+  def verify_token(token):
+    from main import app
+    s = Serializer(app.config['SECRET_KEY'])
+    try:
+      data = s.loads(token)
+    except:
+      return None, None
+    return User.query.get(data['user_id']), data['command']
+
 
   def __repr__(self):
     return f'User({self.id}, {self.username}, {self.email})'

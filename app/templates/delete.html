@@ -1,5 +1,7 @@
 {% extends "profile.html" %}
 
+{% block title %}Delete {{ post.title }}{% endblock %}
+
 {% block data %}
 <form method="POST">
   <h1 class="danger">Do you really want to delete <b>'{{ post.title }}'</b></h1>
