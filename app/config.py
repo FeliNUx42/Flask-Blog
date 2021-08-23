@@ -7,7 +7,9 @@ class Config:
   MAX_CONTENT_LENGTH = 16 * 1024 * 1024
   POSTS_PER_PAGE = 3
 
-  SQLALCHEMY_DATABASE_URI = f'sqlite:///database.db'
+  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', '')\
+    .replace('postgres://', 'postgresql://') or 'sqlite:///database.db'
+
   SQLALCHEMY_TRACK_MODIFICATIONS = False
 
   MAIL_SERVER = "smtp.googlemail.com"
