@@ -4,12 +4,14 @@ from os import path
 from uuid import uuid4
 from flask_login import LoginManager
 from flask_mail import Mail
+from flask_migrate import Migrate
 
 from .config import Config
 import requests
 
 db = SQLAlchemy()
 mail = Mail()
+migrate = Migrate()
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -40,6 +42,7 @@ def create_app():
   db.create_all(app=app)
 
   mail.init_app(app)
+  migrate.init_app(app, db)
 
   login_manager.init_app(app)
 
