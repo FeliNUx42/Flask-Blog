@@ -68,11 +68,12 @@ def signup():
       flash('Password must be longer than 7 characters.', category='error')
     else:
       new_user = User(email=email, username=username, description=description, first_name=firstName, last_name=lastName, password=password1)
+      send_confirm_email(new_user)
       db.session.add(new_user)
       db.session.commit()
-      flash('Account created!', category='success')
+      flash('Account created! A confirmation email has been sent.', category='success')
       login_user(new_user, remember=True)
-      return redirect(url_for("profile.prof", username=new_user.username))
+      return redirect(url_for("auth.unconfirmed", username=new_user.username))
 
 
   return render_template('signup.html')
@@ -85,6 +86,7 @@ def logout():
   flash('Logged out successfully!', category='success')
   return redirect(url_for('home.index'))
 
+
 def send_reset_email(user):
   if not user:
     return
@@ -96,6 +98,17 @@ def send_reset_email(user):
 { url_for('auth.reset_token', token=token, _external=True) }
 
 If you did not make this request then simply ignore this email and no changes will be made."""
+
+  mail.send(msg)
+
+def send_confirm_email(user):
+  token = user.get_token(command="confirm-account")
+  
+  msg = Message("Welcome to Blogopedia", sender="noreply@blogopedia.com", recipients=[user.email])
+  msg.body = f"""To confirm your email for the account, please visit the following link:
+{ url_for('auth.confirm_email', token=token, _external=True) }
+
+If you did not create an account then simply ignore this email and no changes will be made."""
 
   mail.send(msg)
 
@@ -140,3 +153,35 @@ def reset_token(token):
       return redirect(url_for("auth.login"))
   
   return render_template('reset_token.html')
+
+@auth.route('/confirm')
+@login_required
+def unconfirmed():
+  if current_user.confirmed:
+    return redirect(url_for("profile.prof", username=current_user.username))
+  return render_template('unconfirmed.html')
+
+@auth.route('/confirm/<token>')
+@login_required
+def confirm_email(token):
+  user, command = User.verify_token(token)
+  if user is None or command != 'confirm-account':
+    flash('That is an expired or invalid token.', category='error')
+    return redirect(url_for('auth.unconfirmed'))
+  if user.confirmed:
+    flash("User already confirmed.", "error")
+    return redirect(url_for("profile.prof", username=user.username))
+  
+  user.confirmed = True
+  db.session.commit()
+  flash('You have confirmed your account. Thanks!', 'success')
+  return redirect(url_for("profile.prof", username=user.username))
+
+@auth.route('/resend-confirmation')
+@login_required
+def resend_confirmation():
+  if current_user.confirmed:
+    return redirect(url_for("profile.prof", username=current_user.username))
+  send_confirm_email(current_user)
+  flash('A new confirmation email has been sent.', 'success')
+  return redirect(url_for('auth.unconfirmed'))

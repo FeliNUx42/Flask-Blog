@@ -1,8 +1,9 @@
-from flask import Flask, session, request, current_app
+from flask import Flask, session, request, current_app, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from uuid import uuid4
-from flask_login import LoginManager
+from functools import wraps
+from flask_login import LoginManager, current_user
 from flask_mail import Mail
 from flask_migrate import Migrate
 from .config import Config
@@ -118,6 +119,16 @@ def valid_title(title, id=0):
       return False
 
   return True
+
+def confirmed_required(func):
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        if not current_user.confirmed:
+            flash('Please confirm your account!', 'error')
+            return redirect(url_for('auth.unconfirmed'))
+        return func(*args, **kwargs)
+
+    return decorated_function
 
 def markdown(text):
   return requests.post("https://api.github.com/markdown", json={"text":text}).text

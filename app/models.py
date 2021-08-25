@@ -27,6 +27,7 @@ class User(db.Model, UserMixin):
   last_name = db.Column(db.String(128))
   description = db.Column(db.String(1000), default="No description...")
   created = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
+  confirmed = db.Column(db.Boolean, default=False)
   profile_pic = db.Column(db.String(128), default="default.png")
   password_hash = db.Column(db.String(128))
   posts = db.relationship('Post', backref="author", lazy=True)

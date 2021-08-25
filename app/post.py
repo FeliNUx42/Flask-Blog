@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, abort
 from flask_login import login_required, current_user
 from .models import User, Post
-from . import db, valid_title
+from . import db, valid_title, confirmed_required
 
 
 post = Blueprint('post', __name__)
@@ -16,6 +16,7 @@ def pst(username, title):
 
 @post.route('/<username>/create', methods=["GET", "POST"])
 @login_required
+@confirmed_required
 def create(username):
   user = User.query.filter_by(username=username).first_or_404()
   
@@ -48,6 +49,7 @@ def create(username):
 
 @post.route('/<username>/<title>/edit', methods=["GET", "POST"])
 @login_required
+@confirmed_required
 def edit(username, title):
   user = User.query.filter_by(username=username).first_or_404()
   
@@ -78,6 +80,7 @@ def edit(username, title):
 
 @post.route('/<username>/<title>/delete', methods=["GET", "POST"])
 @login_required
+@confirmed_required
 def delete(username, title):
   user = User.query.filter_by(username=username).first_or_404()
   

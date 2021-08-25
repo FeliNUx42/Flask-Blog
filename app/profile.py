@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, abort, current_app
 from flask_login import login_required, current_user, fresh_login_required
 from .models import User, Post
-from . import db, valid_type, custom_filename, valid_username
+from . import confirmed_required, db, valid_type, custom_filename, valid_username
 
 profile = Blueprint('profile', __name__)
 
@@ -17,6 +17,7 @@ def prof(username):
 
 @profile.route('/<username>/settings', methods=['GET', 'POST'])
 @fresh_login_required
+@confirmed_required
 def settings(username):
   user = User.query.filter_by(username=username).first_or_404()
 
@@ -71,6 +72,7 @@ def settings(username):
 
 @profile.route('/<username>/delete-account')
 @login_required
+@confirmed_required
 def deleteacc(username):
   user = User.query.filter_by(username=username).first_or_404()
   
