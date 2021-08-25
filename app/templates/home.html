@@ -12,6 +12,7 @@
   <button type="submit">Search</button>
 </form>
 {% else %}
+<h1>Search results for '{{ search }}':</h1>
 <div class="tab-bar">
   <button type="button" class="tab-active" onclick="changeMode(this, 'tab-username')">Users ({{ username.total }})</button>
   <button type="button" class="" onclick="changeMode(this, 'tab-user-desc')">User Descriptions ({{ user_description.total }})</button>
@@ -20,22 +21,18 @@
 </div>
 <div class="tab-window tab-username tab-active">
   {% set posts =  username%}
-  <h1>Search results for '{{ search }}' ({{ posts.total }}):</h1>
   {% include "user_banners.html" %}
 </div>
 <div class="tab-window tab-user-desc">
   {% set posts =  user_description%}
-  <h1>Search results for '{{ search }}' ({{ posts.total }}):</h1>
   {% include "user_banners.html" %}
 </div>
 <div class="tab-window tab-post-title">
   {% set posts =  post_title%}
-  <h1>Search results for '{{ search }}' ({{ posts.total }}):</h1>
   {% include "post_banners.html" %}
 </div>
 <div class="tab-window tab-post-content">
   {% set posts =  post_content%}
-  <h1>Search results for '{{ search }}' ({{ posts.total }}):</h1>
   {% include "post_banners.html" %}
 </div>
 {% endif %}
