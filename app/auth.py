@@ -86,6 +86,11 @@ def logout():
   flash('Logged out successfully!', category='success')
   return redirect(url_for('home.index'))
 
+def get_link(route, token):
+  if current_app.config["SERVER_NAME"] == "127.0.0.1:5000":
+    return f"https://{current_app.config['SERVER_NAME']}/{route}/{token}"
+  else:
+      return f"http://{current_app.config['SERVER_NAME']}/{route}/{token}"
 
 def send_reset_email(user):
   if not user:
@@ -96,7 +101,7 @@ def send_reset_email(user):
   msg = Message("Password Reset Request", sender="noreply@blogopedia.com", recipients=[user.email])
   with current_app.app_context(), current_app.test_request_context():
     msg.body = f"""To reset your password, please visit the following link:
-{ url_for('auth.reset_token', token=token, _external=True) }
+{ get_link("reset-password", token) }
 
 If you did not make this request then simply ignore this email and no changes will be made."""
 
@@ -108,7 +113,7 @@ def send_confirm_email(user):
   msg = Message("Welcome to Blogopedia", sender="noreply@blogopedia.com", recipients=[user.email])
   with current_app.app_context(), current_app.test_request_context():
     msg.body = f"""To confirm your email for the account, please visit the following link:
-{ url_for('auth.confirm_email', token=token, _external=True) }
+{ get_link("confirm", token) }
 
 If you did not create an account then simply ignore this email and no changes will be made."""
 
