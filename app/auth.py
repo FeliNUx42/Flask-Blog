@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
 from flask_login import login_required, current_user, logout_user, login_user
 from .models import User
 from . import db, valid_username, mail
@@ -94,7 +94,8 @@ def send_reset_email(user):
   token = user.get_token(command="reset-password")
   
   msg = Message("Password Reset Request", sender="noreply@blogopedia.com", recipients=[user.email])
-  msg.body = f"""To reset your password, please visit the following link:
+  with current_app.app_context(), current_app.test_request_context():
+    msg.body = f"""To reset your password, please visit the following link:
 { url_for('auth.reset_token', token=token, _external=True) }
 
 If you did not make this request then simply ignore this email and no changes will be made."""
@@ -105,7 +106,8 @@ def send_confirm_email(user):
   token = user.get_token(command="confirm-account")
   
   msg = Message("Welcome to Blogopedia", sender="noreply@blogopedia.com", recipients=[user.email])
-  msg.body = f"""To confirm your email for the account, please visit the following link:
+  with current_app.app_context(), current_app.test_request_context():
+    msg.body = f"""To confirm your email for the account, please visit the following link:
 { url_for('auth.confirm_email', token=token, _external=True) }
 
 If you did not create an account then simply ignore this email and no changes will be made."""
