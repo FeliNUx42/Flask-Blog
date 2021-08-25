@@ -15,5 +15,7 @@
   </div>
   <br>
   <button type="submit" class="btn-submit">Submit</button>
+  <p>New User? <a href="{{ url_for('auth.signup') }}">Click to register!</a></p>
+  <p>Forgot your password? <a href="{{ url_for('auth.reset_request') }}">Click to reset it!</a></p>
 </form>
 {% endblock %}

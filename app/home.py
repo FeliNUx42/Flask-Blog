@@ -54,11 +54,13 @@ def index():
   per_page = request.args.get("per-page", current_app.config['POSTS_PER_PAGE'], type=int)
   default = False
 
-  if search or order_by or per_page or page:
+  if search is not None or request.args.get("page") \
+    or request.args.get("order-by") or request.args.get("per-page"):
     session["SEARCH_QUERY"] = {"search":search, "order_by":order_by, "per_page":per_page, "page":page}
   if session.get("SEARCH_QUERY"):
     data = get_posts(**session["SEARCH_QUERY"])
   else:
+    data = {}
     default = True
 
   print(default, session.get("SEARCH_QUERY"))

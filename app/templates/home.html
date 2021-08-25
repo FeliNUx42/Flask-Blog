@@ -5,6 +5,12 @@
 {% block content %}
 {% if default %}
 <h1>Blogopedia</h1>
+<hr>
+<h3>Find the best <b>blogs</b> on the internet and write your own!</h3>
+<form method="GET">
+  <input type="text" name="search" id="search" placeholder="Search for a keyword...">
+  <button type="submit">Search</button>
+</form>
 {% else %}
 <div class="tab-bar">
   <button type="button" class="tab-active" onclick="changeMode(this, 'tab-username')">Users ({{ username.total }})</button>

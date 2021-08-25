@@ -13,6 +13,10 @@ h1 .danger {
   color: #800;
 }
 
+h3 {
+  margin: 2rem 0;
+}
+
 #content form label {
   display: block;
   margin-bottom: 5px;
@@ -81,6 +85,10 @@ h1 .danger {
 
 #content form button.danger{
   background-color: #b00;
+}
+
+#content form button[type=submit] {
+  margin-bottom: 1rem;
 }
 
 #change-pwd {
