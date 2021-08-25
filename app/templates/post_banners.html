@@ -18,7 +18,7 @@
     </div>
   </div>
   <hr>
-  <p class="post-banner-description read-more">{{ post.description }}</p>
+  <p class="post-banner-description read-more">{{ post.description }} - <b>{{ moment(post.created).format("DD MMMM, YYYY") }}</b></p>
 </div>
 {% endfor %}
 <div class="pagination">

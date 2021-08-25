@@ -6,12 +6,14 @@ from functools import wraps
 from flask_login import LoginManager, current_user
 from flask_mail import Mail
 from flask_migrate import Migrate
+from flask_moment import Moment
 from .config import Config
 import requests
 
 db = SQLAlchemy()
 mail = Mail()
 migrate = Migrate()
+moment = Moment()
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -52,6 +54,8 @@ def create_app():
   mail.init_app(app)
 
   migrate.init_app(app, db)
+
+  moment.init_app(app)
 
   login_manager.init_app(app)
 

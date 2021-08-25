@@ -158,6 +158,11 @@
   color: #666;
 }
 
+.post-banner-description b {
+  font-weight: 1000;
+  color: #333;
+}
+
 .post-banner .hide-overflow {
   position: relative;
   max-height: 120px;

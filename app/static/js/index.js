@@ -35,23 +35,27 @@ function autoGrow(element) {
 
 // Read more
 
-const readMore = document.querySelectorAll(".read-more");
-readMore.forEach(elem => {
-  if (elem.offsetHeight < 100)  return;
-  
-  elem.classList.add("hide-overflow");
-  let btn = document.createElement("div");
-  btn.classList.add("read-more-div");
-  btn.appendChild(document.createElement("a"));
-  elem.parentElement.appendChild(btn);
-})
+function readMoreFunc() {
+  const readMore = document.querySelectorAll(".read-more");
+  readMore.forEach(elem => {
+    if (elem.offsetHeight < 100)  return;
+    
+    elem.classList.add("hide-overflow");
+    let btn = document.createElement("div");
+    btn.classList.add("read-more-div");
+    btn.appendChild(document.createElement("a"));
+    elem.parentElement.appendChild(btn);
+  })
 
-const readMoreBtn = document.querySelectorAll(".read-more-div a");
-readMoreBtn.forEach(elem => {
-  elem.addEventListener("click", () => {
-    elem.parentNode.parentNode.classList.toggle("read-more-active")
-  });
-})
+  const readMoreBtn = document.querySelectorAll(".read-more-div a");
+  readMoreBtn.forEach(elem => {
+    elem.addEventListener("click", () => {
+      elem.parentNode.parentNode.classList.toggle("read-more-active")
+    });
+  })
+}
+
+readMoreFunc();
 
 // change mode: edit - preview
 function changeMode(element, body) {
@@ -70,6 +74,8 @@ function changeMode(element, body) {
     if (window.classList.contains("tab-active")) window.classList.remove("tab-active")
     if (window.classList.contains(body)) window.classList.add("tab-active")
   })
+
+  readMoreFunc();
   
   if (body == "tab-preview") {
     let preview = document.querySelector(".tab-preview")

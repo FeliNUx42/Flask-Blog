@@ -17,7 +17,7 @@
     </div>
   </div>
   <hr>
-  <p class="post-banner-description">{{ post.description }}</p>
+  <p class="post-banner-description">{{ post.description }} - <b>{{ moment(post.created).format("DD MMMM, YYYY") }}</b></p>
 </div>
 <div class="markdown-body">
   {{ markdown(post.content) | safe }}
