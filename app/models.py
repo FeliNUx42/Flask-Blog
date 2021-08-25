@@ -2,6 +2,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import backref
 from . import db
 from flask_login import UserMixin
+from flask import current_app
 from datetime import datetime
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
@@ -42,14 +43,12 @@ class User(db.Model, UserMixin):
     return check_password_hash(self.password_hash, password)
   
   def get_token(self, command, expire_sec=1800):
-    from main import app
-    s = Serializer(app.config['SECRET_KEY'], expire_sec)
+    s = Serializer(current_app.config['SECRET_KEY'], expire_sec)
     return s.dumps({'user_id': self.id, 'command': command}).decode('utf-8')
   
   @staticmethod
   def verify_token(token):
-    from main import app
-    s = Serializer(app.config['SECRET_KEY'])
+    s = Serializer(current_app.config['SECRET_KEY'])
     try:
       data = s.loads(token)
     except:

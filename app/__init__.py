@@ -1,15 +1,16 @@
-from flask import Flask, session, request
+from flask import Flask, session, request, current_app
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from uuid import uuid4
 from flask_login import LoginManager
 from flask_mail import Mail
-
+from flask_migrate import Migrate
 from .config import Config
 import requests
 
 db = SQLAlchemy()
 mail = Mail()
+migrate = Migrate()
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -49,6 +50,8 @@ def create_app():
 
   mail.init_app(app)
 
+  migrate.init_app(app, db)
+
   login_manager.init_app(app)
 
   from .home import home
@@ -83,10 +86,9 @@ def custom_filename(filename):
 
 def valid_username(username, id=0):
   from .models import User
-  from main import app
 
   user = User.query.filter_by(username=username).first()
-  pages = list(app.url_map.iter_rules())
+  pages = list(current_app.url_map.iter_rules())
   _pages = [p.rule.split("/")[-1] for p in pages if not p.arguments]
   
   if user and user.id != id:
@@ -99,10 +101,9 @@ def valid_username(username, id=0):
 
 def valid_title(title, id=0):
   from .models import Post
-  from main import app
 
   post = Post.query.filter_by(title=title).first()
-  pages = list(app.url_map.iter_rules())
+  pages = list(current_app.url_map.iter_rules())
   _pages = ["/"+p.rule.split("/")[-1] for p in pages if p.arguments == {'username'} and p.endpoint != 'profile.prof']
   pages_ = ["/"+p.rule.split("/")[-1]  for p in pages if p.arguments == {"username", "title"} and p.endpoint != 'post.pst']
   

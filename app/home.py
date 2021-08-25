@@ -1,13 +1,19 @@
-from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, session
+from flask import Blueprint, render_template, request, session, current_app
 from sqlalchemy import or_
-from flask_login import current_user
 from .models import User, Post
-from . import db
 
 
 home = Blueprint('home', __name__)
 
-# check __init__.py - line 
+# check __init__.py - line 42
+"""
+@app.before_request
+  def check_session():
+    if request.path == "/": return
+
+    if session.get("SEARCH_QUERY"):
+      del session["SEARCH_QUERY"]
+"""
 
 
 def get_posts(search, order_by, per_page, page=1):
@@ -42,12 +48,10 @@ def get_posts(search, order_by, per_page, page=1):
 
 @home.route('/')
 def index():
-  from main import app
-
   search = request.args.get("search")
   page = request.args.get("page", 1, type=int)
   order_by = request.args.get("order-by", "latest")
-  per_page = request.args.get("per-page", app.config['POSTS_PER_PAGE'], type=int)
+  per_page = request.args.get("per-page", current_app.config['POSTS_PER_PAGE'], type=int)
   default = False
 
   if search or order_by or per_page or page:

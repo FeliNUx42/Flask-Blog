@@ -129,23 +129,26 @@
   margin-left: auto;
 }
 
+.post-banner-links a {
+  text-decoration: none;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 8px;
+  color: black;
+}
+
 .post-banner-links a:not(.no-style) {
   width: 90px;
   height: 100%;
-  padding: 3px 8px;
-  text-decoration: none;
   text-align: center;
   border-radius: 5px;
   background-color: #007bff;
   color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.post-banner-links .no
-
-.post-banner-links a:hover{
+.post-banner-links a:not(.no-style):hover{
   background-color: #0069d9;
 }
 

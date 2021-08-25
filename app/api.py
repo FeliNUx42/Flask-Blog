@@ -1,7 +1,5 @@
-from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
-from flask_login import login_required, current_user, logout_user, login_user
-from .models import User, Post
-from . import db, valid_username, markdown
+from flask import Blueprint, request
+from . import valid_username, markdown
 
 
 api = Blueprint('api', __name__)

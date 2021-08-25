@@ -1,19 +1,17 @@
-from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, abort
+from flask import Blueprint, render_template, request, flash, redirect, url_for, abort, current_app
 from flask_login import login_required, current_user, fresh_login_required
 from .models import User, Post
-from . import db, valid_type, custom_filename, valid_username, valid_title
-import json
+from . import db, valid_type, custom_filename, valid_username
 
 profile = Blueprint('profile', __name__)
 
 @profile.route('/<username>', methods=['GET', 'POST'])
 def prof(username):
-  from main import app
   page = request.args.get('page', 1, type=int)
 
   user = User.query.filter_by(username=username).first_or_404()
   posts = Post.query.filter_by(author=user).order_by(Post.created.desc())\
-    .paginate(page, app.config["POSTS_PER_PAGE"], True)
+    .paginate(page, current_app.config["POSTS_PER_PAGE"], True)
 
   return render_template("profile.html", author=user, posts=posts)
 
@@ -61,9 +59,8 @@ def settings(username):
         if not valid_type(f.filename):
           flash(f"'{f.filename}' is not a valid filetype. Only .png, .jpg and .jpeg are accepted.")
         else:
-          from main import app
           filename = custom_filename(f.filename)
-          f.save(app.config['PROFILE_PICTURE_FOLDER'] + filename)
+          f.save(current_app.config['PROFILE_PICTURE_FOLDER'] + filename)
           user.profile_pic = filename
     
       db.session.commit()
