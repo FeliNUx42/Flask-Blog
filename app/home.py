@@ -17,10 +17,10 @@ home = Blueprint('home', __name__)
 
 
 def get_posts(search, order_by, per_page, page=1):
-  username = User.query.filter(User.username.like(f'%{search}%'))
-  user_desc = User.query.filter(User.description.like(f'%{search}%'))
-  post_title = Post.query.filter(Post.title.like(f'%{search}%'))
-  post_content = Post.query.filter(or_(Post.description.like(f'%{search}%'), Post.content.like(f'%{search}%')))
+  username = User.query.filter(User.username.ilike(f'%{search}%'))
+  user_desc = User.query.filter(User.description.ilike(f'%{search}%'))
+  post_title = Post.query.filter(Post.title.ilike(f'%{search}%'))
+  post_content = Post.query.filter(or_(Post.description.ilike(f'%{search}%'), Post.content.like(f'%{search}%')))
 
   if order_by == "latest":
     username = username.order_by(User.created.desc())
