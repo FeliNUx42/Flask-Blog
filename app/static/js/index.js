@@ -24,18 +24,6 @@ function alertClose (element) {
   element.parentNode.classList.add("alert-hidden");
 }
 
-// (de)activate passwords in settings
-
-const checkbox = document.querySelector("#activate-pwd");
-const pwd = document.querySelector(".settings-passwords");
-
-checkbox.addEventListener("change", e => {
-  pwd.classList.toggle("pwd-hidden");
-  document.querySelectorAll(".settings-passwords input").forEach( element => {
-    element.value = e.target.checked ? "" : "none";
-  });
-});
-
 // grow textarea for creating / editing Post
 
 function autoGrow(element) {
@@ -44,6 +32,26 @@ function autoGrow(element) {
     element.style.height = element.scrollHeight + "px";
   }, 0);
 }
+
+// Read more
+
+const readMore = document.querySelectorAll(".read-more");
+readMore.forEach(elem => {
+  if (elem.offsetHeight < 100)  return;
+  
+  elem.classList.add("hide-overflow");
+  let btn = document.createElement("div");
+  btn.classList.add("read-more-div");
+  btn.appendChild(document.createElement("a"));
+  elem.parentElement.appendChild(btn);
+})
+
+const readMoreBtn = document.querySelectorAll(".read-more-div a");
+readMoreBtn.forEach(elem => {
+  elem.addEventListener("click", () => {
+    elem.parentNode.parentNode.classList.toggle("read-more-active")
+  });
+})
 
 // change mode: edit - preview
 function changeMode(element, body) {
@@ -83,3 +91,15 @@ function changeMode(element, body) {
     req.send(param);
   }
 }
+
+// (de)activate passwords in settings
+
+const checkbox = document.querySelector("#activate-pwd");
+const pwd = document.querySelector(".settings-passwords");
+
+checkbox.addEventListener("change", e => {
+  pwd.classList.toggle("pwd-hidden");
+  document.querySelectorAll(".settings-passwords input").forEach( element => {
+    element.value = e.target.checked ? "" : "none";
+  });
+});

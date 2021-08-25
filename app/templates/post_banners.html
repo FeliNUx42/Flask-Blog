@@ -1,11 +1,11 @@
 {% for post in posts.items: %}
-<div
-  class="post-banner"
-  style="cursor: pointer;"
-  onclick="window.location = `{{ url_for('post.pst', username=post.author.username, title=post.title)}}`"
-  tabindex="1"
->
-  <div class="post-banner-top">
+<div class="post-banner">
+  <div
+    class="post-banner-top"
+    style="cursor: pointer;"
+    onclick="window.location = `{{ url_for('post.pst', username=post.author.username, title=post.title)}}`"
+    tabindex="1"
+  >
     <h1>{{ post.title }}</h1>
     <div class="post-banner-links">
       {% if post.author != current_user %}
@@ -18,7 +18,7 @@
     </div>
   </div>
   <hr>
-  <p class="post-banner-description">{{ post.description }}</p>
+  <p class="post-banner-description read-more">{{ post.description }}</p>
 </div>
 {% endfor %}
 <div class="pagination">
