@@ -1,0 +1,39 @@
+{% for author in posts.items: %}
+<div
+  class="profile-banner"
+  style="cursor: pointer;"
+  onclick="window.location = `{{ url_for('profile.prof', username=author.username)}}`"
+  tabindex="1"
+>
+  <div class="profile-banner-top">
+    <figure><img src="{{ url_for('static', filename='profile_pictures/'+author.profile_pic) }}" alt="Profile"></figure>
+    <div>
+      <h1>{{ author.username }}</h1>
+      <p>{{ author.first_name }} {{ author.last_name }}</p>
+    </div>
+    <div class="profile-banner-links">
+      {% if author == current_user %}
+      <a href="{{ url_for('profile.prof', username=author.username) }}">Posts</a>
+      <a href="{{ url_for('post.create', username=author.username) }}">Create new Post</a>
+      <a href="{{ url_for('profile.settings', username=author.username)}}">Settings</a>
+      <a href="{{ url_for('profile.deleteacc', username=author.username) }}">Delete Account</a>
+      {% endif %}
+    </div>
+  </div>
+  <hr>
+  <p class="profile-banner-description">{{ author.description }}</p>
+</div>
+{% endfor %}
+<div class="pagination">
+  {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=3) %}
+  {% if page_num %}
+    {% if page_num == posts.page %}
+    <a class="pagination-link current-page" href="{{ url_for('home.index', page=page_num) }}">{{ page_num }}</a>
+    {% else %}
+    <a class="pagination-link" href="{{ url_for('home.index', page=page_num) }}">{{ page_num }}</a>
+    {% endif %}
+  {% else %}
+  ...
+  {% endif %}
+{% endfor %}
+</div>

@@ -9,8 +9,8 @@
     <h1>{{ post.title }}</h1>
     <div class="post-banner-links">
       {% if post.author != current_user %}
-      <figure><img src="{{ url_for('static', filename='profile_pictures/'+post.author.profile_pic) }}" alt="Profile"></figure>
-      <p>{{ post.author.username }}</p>
+      <a href="{{ url_for('profile.prof', username=post.author.username) }}" class="no-style"><figure><img src="{{ url_for('static', filename='profile_pictures/'+post.author.profile_pic) }}" alt="Profile"></figure>
+      <p>{{ post.author.username }}</p></a>
       {% else %}
       <a href="{{ url_for('post.edit', username=post.author.username, title=post.title) }}">Edit</a>
       <a href="{{ url_for('post.delete', username=post.author.username, title=post.title) }}">Delete</a>

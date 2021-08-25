@@ -36,7 +36,8 @@ def get_posts(search, order_by, per_page, page=1):
     "username": username,
     "user_description": user_desc,
     "post_title": post_title,
-    "post_content": post_content
+    "post_content": post_content,
+    "search": search
   }
 
 @home.route('/')

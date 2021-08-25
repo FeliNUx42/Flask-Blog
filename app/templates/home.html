@@ -3,10 +3,8 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>Blogopedia</h1>
-
 {% if default %}
-{% include "tab.html" %}
+<h1>Blogopedia</h1>
 {% else %}
 <div class="tab-bar">
   <button type="button" class="tab-active" onclick="changeMode(this, 'tab-username')">Users ({{ username.total }})</button>
@@ -16,17 +14,23 @@
 </div>
 <div class="tab-window tab-username tab-active">
   {% set posts =  username%}
+  <h1>Search results for '{{ search }}' ({{ posts.total }}):</h1>
+  {% include "user_banners.html" %}
 </div>
 <div class="tab-window tab-user-desc">
   {% set posts =  user_description%}
+  <h1>Search results for '{{ search }}' ({{ posts.total }}):</h1>
+  {% include "user_banners.html" %}
 </div>
 <div class="tab-window tab-post-title">
   {% set posts =  post_title%}
-  {% include "post_banner.html" %}
+  <h1>Search results for '{{ search }}' ({{ posts.total }}):</h1>
+  {% include "post_banners.html" %}
 </div>
 <div class="tab-window tab-post-content">
   {% set posts =  post_content%}
-  {% include "post_banner.html" %}
+  <h1>Search results for '{{ search }}' ({{ posts.total }}):</h1>
+  {% include "post_banners.html" %}
 </div>
 {% endif %}
 {% endblock %}
