@@ -88,9 +88,9 @@ def logout():
 
 def get_link(route, token):
   if current_app.config["SERVER_NAME"] == "127.0.0.1:5000":
-    return f"https://{current_app.config['SERVER_NAME']}/{route}/{token}"
+    return f"http://{current_app.config['SERVER_NAME']}/{route}/{token}"
   else:
-      return f"http://{current_app.config['SERVER_NAME']}/{route}/{token}"
+      return f"https://{current_app.config['SERVER_NAME']}/{route}/{token}"
 
 def send_reset_email(user):
   if not user:
