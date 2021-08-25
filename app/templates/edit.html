@@ -6,11 +6,11 @@
 <h1>Editing Post</h1>
 
 <form method="POST">
-  <div class="create-toggle">
-    <button type="button" class="toggle-active" onclick="changeMode(this)">Raw</button>
-    <button type="button" class="" onclick="changeMode(this)">Preview</button>
+  <div class="tab-bar">
+    <button type="button" class="tab-active" onclick="changeMode(this, 'tab-inputs')">Raw</button>
+    <button type="button" class="" onclick="changeMode(this, 'tab-previwe')">Preview</button>
   </div>
-  <div class="create-inputs">
+  <div class="tab-inputs tab-active tab-window">
     <input type="hidden" name="title" id="title" value="{{ post.title }}">
     <div>
       <label for="description">Description</label>
@@ -21,7 +21,7 @@
       <textarea name="data" id="data" onkeydown="autoGrow(this)">{{ post.content }}</textarea>
     </div>
   </div>
-  <div class="create-preview mode-inactive"></div>
+  <div class="tab-preview tab-window"></div>
   <button type="submit">Edit</button>
 </form>
 {% endblock %}

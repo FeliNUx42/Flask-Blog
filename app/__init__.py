@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, session, request
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from uuid import uuid4
@@ -35,8 +35,16 @@ def create_app():
   def globals():
     return {
       "markdown": markdown,
-      "len": len
+      "len": len,
+      "app": app
     }
+
+  @app.before_request
+  def check_session():
+    if request.path == "/": return
+
+    if session.get("SEARCH_QUERY"):
+      del session["SEARCH_QUERY"]
 
   db.init_app(app)
   db.create_all(app=app)

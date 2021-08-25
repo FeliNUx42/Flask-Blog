@@ -46,21 +46,25 @@ function autoGrow(element) {
 }
 
 // change mode: edit - preview
-function changeMode(element) {
-  if (element.classList.contains("toggle-active")) return;
+function changeMode(element, body) {
+  if (element.classList.contains("tab-active")) return;
   
-  const inputs = document.querySelector(".create-inputs");
-  const preview = document.querySelector(".create-preview");
-  const buttons = document.querySelectorAll(".create-toggle button");
+  const buttons = document.querySelectorAll(".tab-bar button");
+  const windows = document.querySelectorAll(".tab-window")
 
-  buttons.forEach(button => button.classList.toggle("toggle-active"));
+  buttons.forEach(button => {
+    if (button.classList.contains("tab-active")) button.classList.remove("tab-active");
+  });
 
-  inputs.classList.toggle("mode-inactive");
-  preview.classList.toggle("mode-inactive");
+  element.classList.add("tab-active")
 
-  if (preview.classList.contains("mode-inactive")) {
-    preview.innerHTML = "";
-  } else {
+  windows.forEach(window => {
+    if (window.classList.contains("tab-active")) window.classList.remove("tab-active")
+    if (window.classList.contains(body)) window.classList.add("tab-active")
+  })
+  
+  if (body == "tab-preview") {
+    let preview = document.querySelector(".tab-preview")
     let req = new XMLHttpRequest();
     let url = "/markdown";
     let param = "data=" + document.querySelector("#data").value.replaceAll("&", "%26");

@@ -137,7 +137,7 @@ input:focus, textarea:focus {
   outline: 2px solid #007bff;
 }
 
-#content form .create-toggle {
+#content .tab-bar {
   display: flex;
   justify-content: left;
   gap: 2px;
@@ -145,27 +145,31 @@ input:focus, textarea:focus {
   margin-bottom: 15px;
 }
 
-#content form .create-toggle button {
+#content .tab-bar button {
   background-color: #ddd;
   border: none;
   border-radius: 3px;
   margin-right: 2px;
   margin-bottom: 4px;
-  width: 150px;
+  min-width: 150px;
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #fff;
+  transition: all 0.3s ease-out;
 }
 
-#content form .create-toggle button:not(.toggle-active):hover {
+#content .tab-bar button:not(.tab-active):hover {
   background-color: #ccc;
 } 
 
-#content form .create-toggle .toggle-active {
+#content .tab-bar .tab-active {
   background-color: #ccc;
 }
 
-#content form .mode-inactive {
+#content .tab-window:not(.tab-active) {
   display: none;
 }
 
-#content form .create-preview {
+#content .tab-preview {
   margin-bottom: 20px;
 }

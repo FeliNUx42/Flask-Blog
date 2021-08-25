@@ -99,7 +99,7 @@
           </div>
           <div>
             <label for="per-page" id="label-per-page">Results per page: </label>
-            <input type="number" name="per-page" id="per-page" min="3" max="30" value="10">
+            <input type="number" name="per-page" id="per-page" min="3" max="30" value="{{ app.config['POSTS_PER_PAGE'] }}">
           </div>
           <div>
             <button type="submit">Search</button>

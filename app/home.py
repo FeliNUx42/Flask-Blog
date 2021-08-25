@@ -7,12 +7,7 @@ from . import db
 
 home = Blueprint('home', __name__)
 
-@home.before_request
-def check_session():
-  if request.path == "/": return
-
-  if session.get("SEARCH_QUERY"):
-    del session["SEARCH_QUERY"]
+# check __init__.py - line 
 
 
 def get_posts(search, order_by, per_page, page=1):
@@ -54,13 +49,13 @@ def index():
   per_page = request.args.get("per-page", app.config['POSTS_PER_PAGE'], type=int)
   default = False
 
-  if search:
+  if search or order_by or per_page or page:
     session["SEARCH_QUERY"] = {"search":search, "order_by":order_by, "per_page":per_page, "page":page}
   if session.get("SEARCH_QUERY"):
-    posts = get_posts(**session["SEARCH_QUERY"])
+    data = get_posts(**session["SEARCH_QUERY"])
   else:
-    posts = Post.query.order_by(Post.created.asc()).paginate(page, per_page, True)
     default = True
 
-  return render_template("home.html", posts=posts, default=default)
+  print(default, session.get("SEARCH_QUERY"))
+  return render_template("home.html", **data, default=default)
 
