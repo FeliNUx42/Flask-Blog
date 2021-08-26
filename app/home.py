@@ -67,6 +67,7 @@ def index():
   return render_template("home.html", **data, default=default)
 
 @home.route("/sitemap")
+@home.route("/sitemap.xml")
 def sitemap():
   server_name = f"{request.scheme}://{request.host}"
 
