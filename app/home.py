@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, session, current_app
+from flask import Blueprint, render_template, request, session, current_app, make_response, url_for
+from datetime import datetime, timedelta
 from sqlalchemy import or_
 from .models import User, Post
 
@@ -64,4 +65,31 @@ def index():
     default = True
 
   return render_template("home.html", **data, default=default)
+
+@home.route("/sitemap")
+def sitemap():
+  server_name = f"{request.scheme}://{request.host}"
+
+  pages = []
+
+  lastmod = datetime.now() - timedelta(days=10)
+  lastmod = lastmod.strftime('%Y-%m-%d')
+  for rule in current_app.url_map.iter_rules():
+    if 'GET' in rule.methods and len(rule.arguments) == 0:
+      pages.append([server_name + rule.rule, lastmod])
+  
+  users = User.query.all()
+  for user in users:
+    url = server_name + url_for('profile.prof', username=user.username)
+    pages.append([url, lastmod])
+
+  posts = Post.query.all()
+  for post in posts:
+    url = server_name + url_for('post.pst', username=post.author.username, title=post.title)
+    pages.append([url, lastmod])
+
+  sitemap_template = render_template('sitemap.xml', pages=pages)
+  response = make_response(sitemap_template)
+  response.headers['Content-Type'] = 'application/xml'
+  return response
 
