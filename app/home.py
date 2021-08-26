@@ -75,7 +75,7 @@ def sitemap():
   lastmod = datetime.now() - timedelta(days=10)
   lastmod = lastmod.strftime('%Y-%m-%d')
   for rule in current_app.url_map.iter_rules():
-    if 'GET' in rule.methods and len(rule.arguments) == 0:
+    if 'GET' in rule.methods and len(rule.arguments) == 0 and not rule.endpoint.startswith("auth."):
       pages.append([server_name + rule.rule, lastmod])
   
   users = User.query.all()
