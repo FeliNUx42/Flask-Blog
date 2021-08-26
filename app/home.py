@@ -63,6 +63,5 @@ def index():
     data = {}
     default = True
 
-  print(default, session.get("SEARCH_QUERY"))
   return render_template("home.html", **data, default=default)
 

@@ -29,6 +29,7 @@
     <label for="password2">Password (Confirm)</label>
     <input type="password"  id="password2" name="password2" placeholder="Confirm password">
   </div>
+  {{ recaptcha }}
   <br>
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <button type="submit" class="btn-success">Submit</button>

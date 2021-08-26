@@ -8,6 +8,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_moment import Moment
+from flask_recaptcha import ReCaptcha
 from .config import Config
 import requests
 
@@ -16,6 +17,7 @@ mail = Mail()
 migrate = Migrate()
 moment = Moment()
 csrf = CSRFProtect()
+recaptcha = ReCaptcha()
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -57,6 +59,7 @@ def create_app():
   moment.init_app(app)
   login_manager.init_app(app)
   csrf.init_app(app)
+  recaptcha.init_app(app)
 
   from .home import home
   from .auth import auth

@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
 from flask_login import login_required, current_user, logout_user, login_user
 from .models import User
-from . import db, valid_username, mail
+from . import db, valid_username, mail, recaptcha
 from flask_mail import Message
 
 
@@ -50,7 +50,9 @@ def signup():
       description = "No description..."
 
     user1 = User.query.filter_by(email=email).first()
-    if user1:
+    if not recaptcha.verify():
+      flash("Please fill out the ReCaptcha!", category="error")
+    elif user1:
       flash('Email already exists.', category='error')
     elif not valid_username(username):
       flash('Username already exists.', category='error')
