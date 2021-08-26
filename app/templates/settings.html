@@ -40,6 +40,7 @@
       <input type="password"  id="password2" name="password2" placeholder="Confirm password" value="none">
     </div>
   </div>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <button type="submit" class="btn-submit">Save</button>
 </form>
 {% endblock %}

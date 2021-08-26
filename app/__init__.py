@@ -4,6 +4,7 @@ from os import path
 from uuid import uuid4
 from functools import wraps
 from flask_login import LoginManager, current_user
+from flask_wtf.csrf import CSRFProtect
 from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_moment import Moment
@@ -14,6 +15,7 @@ db = SQLAlchemy()
 mail = Mail()
 migrate = Migrate()
 moment = Moment()
+csrf = CSRFProtect()
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -50,14 +52,11 @@ def create_app():
 
   db.init_app(app)
   db.create_all(app=app)
-
   mail.init_app(app)
-
   migrate.init_app(app, db)
-
   moment.init_app(app)
-
   login_manager.init_app(app)
+  csrf.init_app(app)
 
   from .home import home
   from .auth import auth
