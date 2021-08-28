@@ -80,14 +80,14 @@ def followers(username):
 
   return render_template("followers.html", followers=followers, author=user)
 
-@profile.route("/<username>/followed")
-def followed(username):
+@profile.route("/<username>/following")
+def following(username):
   page = request.args.get('page', 1, type=int)
 
   user = User.query.filter_by(username=username).first_or_404()
-  followed = user.followed.paginate(page, current_app.config["POSTS_PER_PAGE"], True)
+  following = user.followed.paginate(page, current_app.config["POSTS_PER_PAGE"], True)
 
-  return render_template("followed.html", followed=followed, author=user)
+  return render_template("following.html", following=following, author=user)
 
 @profile.route("/<username>/follow", methods=["POST"])
 @login_required

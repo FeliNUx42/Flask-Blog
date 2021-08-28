@@ -12,7 +12,7 @@
     </div>
     <div class="profile-banner-links">
       <a class="light" href="{{ url_for('profile.followers', username=author.username) }}">Followers ({{ author.followers.count() }})</a>
-      <a class="light" href="{{ url_for('profile.followed', username=author.username) }}">Followed ({{ author.followed.count()  }})</a>
+      <a class="light" href="{{ url_for('profile.following', username=author.username) }}">Following ({{ author.followed.count()  }})</a>
       {% if author == current_user %}
       <a class="expand" href="{{ url_for('profile.settings', username=author.username)}}">Settings</a>
       {% else %}
