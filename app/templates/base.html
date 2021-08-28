@@ -117,8 +117,8 @@
         {% else %}
         <a href="{{ url_for('profile.prof', username=current_user.username) }}">Profile Page</a>
         <a href="{{ url_for('profile.settings', username=current_user.username) }}">Settings</a>
-        <a href="">Followers (...)</a>
-        <a href="">Following (...)</a>
+        <a href="">Followers ({{ current_user.followers.count()}})</a>
+        <a href="">Following ({{ current_user.followed.count()}})</a>
         <a href="">Liked Posts</a>
         <a href="{{ url_for('post.create', username=current_user.username) }}">Create Post</a>
         <a href="{{ url_for('auth.logout') }}">Logout</a>

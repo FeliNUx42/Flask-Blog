@@ -7,6 +7,11 @@ from datetime import datetime
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 
+followers = db.Table('followers',
+    db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
+)
+
 class Post(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   title = db.Column(db.String(128))
@@ -31,6 +36,24 @@ class User(db.Model, UserMixin):
   profile_pic = db.Column(db.String(128), default="default.png")
   password_hash = db.Column(db.String(128))
   posts = db.relationship('Post', backref="author", lazy=True)
+
+  followed = db.relationship(
+    'User', secondary=followers,
+    primaryjoin=(followers.c.follower_id == id),
+    secondaryjoin=(followers.c.followed_id == id),
+    backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
+  
+  def follow(self, user):
+    if not self.is_following(user) and self != user:
+      self.followed.append(user)
+
+  def unfollow(self, user):
+    if self.is_following(user):
+      self.followed.remove(user)
+
+  def is_following(self, user):
+    return self.followed.filter(
+      followers.c.followed_id == user.id).count() > 0
 
   @property
   def password(self):

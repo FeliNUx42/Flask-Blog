@@ -70,6 +70,25 @@ def settings(username):
 
   return render_template("settings.html", author=current_user)
 
+@profile.route("/<username>/followers")
+def followers(username):
+  user = User.query.filter_by(username=username).first_or_404()
+
+@profile.route("/<username>/followed")
+def followed(username):
+  user = User.query.filter_by(username=username).first_or_404()
+
+@profile.route("/<username>/follow", methods=["POST"])
+@login_required
+def follow(username):
+  user = User.query.filter_by(username=username).first_or_404()
+
+  if user != current_user:
+    abort(403)
+
+  target = User.query.filter_by(username=request.form.get("target")).first_or_404()
+
+
 @profile.route('/<username>/delete-account')
 @login_required
 @confirmed_required

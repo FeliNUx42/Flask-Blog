@@ -47,14 +47,13 @@
 .profile-banner-links {
   height: 100%;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 150px 150px;
   grid-gap: 15px;
   justify-content: space-between;
   margin-left: auto;
 }
 
-.profile-banner-links a {
-  width: 180px;
+.profile-banner-links a, #content .profile-banner-links form button {
   padding: 3px 10px;
   text-decoration: none;
   text-align: center;
@@ -65,10 +64,28 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease-out;  
+  margin-bottom: 0;
+
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
 }
 
-.profile-banner-links a:hover{
+.profile-banner-links .expand {
+  grid-column: 1 / 3;
+}
+
+.profile-banner-links a:hover, #content .profile-banner-links form button:hover{
   background-color: #0069d9;
+}
+
+.profile-banner-links a.light {
+  background-color: #ccc;
+  color: #333;
+}
+
+.profile-banner-links a.light:hover {
+  background-color: #bbb;
 }
 
 .profile-banner-description {
