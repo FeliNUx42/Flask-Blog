@@ -30,8 +30,8 @@
     </div>
     <ul class="nav-links">
       <li><a href="/">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Contact</a></li>
+      <li><a href="{{ url_for('home.about') }}">About</a></li>
+      <li><a href="{{ url_for('home.contact') }}">Contact</a></li>
       {% if current_user.is_authenticated %}
       <li><a id="logout" href="{{ url_for('auth.logout') }}">Logout</a></li>
       {% else %}
@@ -120,7 +120,7 @@
         <a href="">Followers ({{ current_user.followers.count()}})</a>
         <a href="">Following ({{ current_user.followed.count()}})</a>
         <a href="">Liked Posts</a>
-        <a href="{{ url_for('post.create', username=current_user.username) }}">Create Post</a>
+        <!--<a href="{{ url_for('post.create', username=current_user.username) }}">Create Post</a>-->
         <a href="{{ url_for('auth.logout') }}">Logout</a>
         <a href="{{ url_for('profile.deleteacc', username=current_user.username) }}">Delete Account</a>
         {% endif %}

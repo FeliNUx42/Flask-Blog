@@ -66,6 +66,14 @@ def index():
 
   return render_template("home.html", **data, default=default)
 
+@home.route("/about")
+def about():
+  return render_template("about.html")
+
+@home.route("/contact")
+def contact():
+  return render_template("contact.html")
+  
 @home.route("/sitemap")
 @home.route("/sitemap.xml")
 def sitemap():
@@ -93,4 +101,3 @@ def sitemap():
   response = make_response(sitemap_template)
   response.headers['Content-Type'] = 'application/xml'
   return response
-
