@@ -1,4 +1,4 @@
-{% for author in posts.items: %}
+{% for author in users.items: %}
 <div
   class="profile-banner"
   style="cursor: pointer;"
@@ -12,11 +12,16 @@
       <p>{{ author.first_name }} {{ author.last_name }}</p>
     </div>
     <div class="profile-banner-links">
+      <a class="light" href="{{ url_for('profile.followers', username=author.username) }}">Followers ({{ author.followers.count() }})</a>
+      <a class="light" href="{{ url_for('profile.followed', username=author.username) }}">Followed ({{ author.followed.count()  }})</a>
       {% if author == current_user %}
-      <a href="{{ url_for('profile.prof', username=author.username) }}">Posts</a>
-      <a href="{{ url_for('post.create', username=author.username) }}">Create new Post</a>
-      <a href="{{ url_for('profile.settings', username=author.username)}}">Settings</a>
-      <a href="{{ url_for('profile.deleteacc', username=author.username) }}">Delete Account</a>
+      <a class="expand" href="{{ url_for('profile.settings', username=author.username)}}">Settings</a>
+      {% else %}
+      <form class="expand" action="{{ url_for('profile.follow', username=current_user.username) }}" method="POST">
+        <input type="hidden" name="target" value="{{ author.username }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit">{{ "Follow" if not current_user.is_following(author) else "Unfollow" }}</button>
+      </form>
       {% endif %}
     </div>
   </div>
@@ -25,9 +30,9 @@
 </div>
 {% endfor %}
 <div class="pagination">
-  {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=3) %}
+  {% for page_num in users.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=3) %}
   {% if page_num %}
-    {% if page_num == posts.page %}
+    {% if page_num == users.page %}
     <a class="pagination-link current-page" href="{{ url_for('home.index', page=page_num) }}">{{ page_num }}</a>
     {% else %}
     <a class="pagination-link" href="{{ url_for('home.index', page=page_num) }}">{{ page_num }}</a>

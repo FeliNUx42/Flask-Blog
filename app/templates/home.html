@@ -20,11 +20,11 @@
   <button type="button" class="" onclick="changeMode(this, 'tab-post-content')">Post Contents ({{ post_content.total }})</button>
 </div>
 <div class="tab-window tab-username tab-active">
-  {% set posts =  username%}
+  {% set users =  username%}
   {% include "user_banners.html" %}
 </div>
 <div class="tab-window tab-user-desc">
-  {% set posts =  user_description%}
+  {% set users =  user_description%}
   {% include "user_banners.html" %}
 </div>
 <div class="tab-window tab-post-title">

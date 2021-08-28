@@ -1,3 +1,4 @@
+from enum import auto
 from flask import Blueprint, render_template, request, flash, redirect, url_for, abort, current_app
 from flask_login import login_required, current_user, fresh_login_required
 from .models import User, Post
@@ -72,11 +73,21 @@ def settings(username):
 
 @profile.route("/<username>/followers")
 def followers(username):
+  page = request.args.get('page', 1, type=int)
+
   user = User.query.filter_by(username=username).first_or_404()
+  followers = user.followers.paginate(page, current_app.config["POSTS_PER_PAGE"], True)
+
+  return render_template("followers.html", followers=followers, author=user)
 
 @profile.route("/<username>/followed")
 def followed(username):
+  page = request.args.get('page', 1, type=int)
+
   user = User.query.filter_by(username=username).first_or_404()
+  followed = user.followed.paginate(page, current_app.config["POSTS_PER_PAGE"], True)
+
+  return render_template("followed.html", followed=followed, author=user)
 
 @profile.route("/<username>/follow", methods=["POST"])
 @login_required
@@ -87,6 +98,22 @@ def follow(username):
     abort(403)
 
   target = User.query.filter_by(username=request.form.get("target")).first_or_404()
+
+  if not user.is_following(target):
+    if target != user:
+      user.follow(target)
+      flash(f" You are following {target.username}", category="success")
+    else:
+      flash("You cannot follow yourself!", category="error")
+  else:
+    if target != user:
+      user.unfollow(target)
+      flash(f" You are not following {target.username}", category="success")
+    else:
+      flash("You cannot unfollow yourself!", category="error")
+  
+  db.session.commit()
+  return redirect(url_for("profile.prof", username=target.username))
 
 
 @profile.route('/<username>/delete-account')
