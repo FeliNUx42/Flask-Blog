@@ -1,8 +1,8 @@
 from enum import auto
 from flask import Blueprint, render_template, request, flash, redirect, url_for, abort, current_app
-from flask_login import login_required, current_user, fresh_login_required
+from flask_login import login_required, current_user, fresh_login_required, logout_user
 from .models import User, Post
-from . import confirmed_required, db, valid_type, custom_filename, valid_username
+from . import confirmed_required, db, valid_type, custom_filename, valid_username, send_delete_email
 
 profile = Blueprint('profile', __name__)
 
@@ -91,6 +91,7 @@ def following(username):
 
 @profile.route("/<username>/follow", methods=["POST"])
 @login_required
+@confirmed_required
 def follow(username):
   user = User.query.filter_by(username=username).first_or_404()
 
@@ -125,7 +126,36 @@ def deleteacc(username):
   if user != current_user:
     abort(403)
 
-  if request.method == 'POST':
-    pass
+  send_delete_email(user)
+  flash('An email has been sent with instructions to delete your account.', category='success')
 
-  return render_template("deleteacc.html", author=current_user)
+  return redirect(url_for("profile.prof", username=user.username))
+
+
+@profile.route('/<username>/delete-account/<token>', methods=['GET', 'POST'])
+@login_required
+@confirmed_required
+def delete_confirm(username, token):
+  _user = User.query.filter_by(username=username).first_or_404()
+  user, command = User.verify_token(token)
+  if user is None or command != 'delete-account':
+    flash('That is an expired or invalid token.', category='error')
+    return redirect(url_for('profile.delete-account', username=_user.username))
+  
+  if user != current_user or user != _user:
+    abort(403)
+
+  if request.method == "POST":
+    delete = request.form.get('yes')
+    if delete is None:
+      return redirect(url_for("profile.prof", username=user.username))
+    
+    logout_user()
+    for p in Post.query.filter_by(author=user).all():
+      db.session.delete(p)
+    db.session.delete(user)
+    db.session.commit()
+    flash('Account deleted successfully!', category='success')
+    return redirect(url_for('home.index'))
+
+  return render_template("deleteacc.html", author=user)

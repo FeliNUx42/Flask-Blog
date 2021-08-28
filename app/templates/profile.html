@@ -14,13 +14,15 @@
       <a class="light" href="{{ url_for('profile.followers', username=author.username) }}">Followers ({{ author.followers.count() }})</a>
       <a class="light" href="{{ url_for('profile.following', username=author.username) }}">Following ({{ author.followed.count()  }})</a>
       {% if author == current_user %}
-      <a class="expand" href="{{ url_for('profile.settings', username=author.username)}}">Settings</a>
-      {% else %}
+      <a class="expand" href="{{ url_for('profile.settings', username=author.username) }}">Settings</a>
+      {% elif current_user.is_authenticated %}
       <form class="expand" action="{{ url_for('profile.follow', username=current_user.username) }}" method="POST">
         <input type="hidden" name="target" value="{{ author.username }}">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <button type="submit">{{ "Follow" if not current_user.is_following(author) else "Unfollow" }}</button>
       </form>
+      {% else %}
+      <a class="expand" href="{{ url_for('auth.login') }}">Login to follow</a>
       {% endif %}
     </div>
   </div>

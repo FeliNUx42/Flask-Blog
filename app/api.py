@@ -1,10 +1,11 @@
 from flask import Blueprint, request
-from . import valid_username, markdown
+from . import valid_username, markdown, csrf
 
 
 api = Blueprint('api', __name__)
 
 @api.route("/markdown", methods=["POST"])
+@csrf.exempt
 def mark():
   if not request.form.get("data"):
     return "<i>empty</i>"
