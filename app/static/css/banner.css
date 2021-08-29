@@ -58,7 +58,7 @@
   text-decoration: none;
   text-align: center;
   border-radius: 5px;
-  background-color: #007bff;
+  background-color: #006681;
   color: #fff;
   display: flex;
   align-items: center;
@@ -76,7 +76,7 @@
 }
 
 .profile-banner-links a:hover, #content .profile-banner-links form button:hover{
-  background-color: #0069d9;
+  background-color: #00808c;
 }
 
 .profile-banner-links a.light {
@@ -162,13 +162,13 @@
   height: 100%;
   text-align: center;
   border-radius: 5px;
-  background-color: #007bff;
+  background-color: #006681;
   color: #fff;
   transition: all 0.3s ease-out;
 }
 
 .post-banner-links a:not(.no-style):hover{
-  background-color: #0069d9;
+  background-color: #00808c;
 }
 
 .post-banner-description {
@@ -214,7 +214,7 @@
 .post-banner .read-more-div a {
   position: relative;
   padding: 8px 10px;
-  background-color: #007bff;
+  background-color: #006681;
   cursor: pointer;
   text-align: center;
   font-size: 14px;
@@ -225,7 +225,7 @@
 }
 
 .post-banner .read-more-div a:hover {
-  background-color: #0069d9;
+  background-color: #00808c;
 }
 
 .post-banner .read-more-div a::before {
