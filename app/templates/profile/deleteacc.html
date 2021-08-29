@@ -1,10 +1,10 @@
-{% extends "profile.html" %}
+{% extends "profile/profile.html" %}
 
-{% block title %}Delete {{ post.title }}{% endblock %}
+{% block title %}Delete Account{% endblock %}
 
 {% block data %}
 <form method="POST">
-  <h1 class="danger">Do you really want to delete <b>'{{ post.title }}'</b>?</h1>
+  <h1 class="danger">Do you really want to delete this account <b>({{ author.username }})</b>?</h1>
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <button type="submit" name="yes" class="btn-submit">Yes</button>
   <button type="submit" name="no" class="btn-submit danger">No</button>

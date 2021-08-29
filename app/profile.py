@@ -14,7 +14,7 @@ def prof(username):
   posts = Post.query.filter_by(author=user).order_by(Post.created.desc())\
     .paginate(page, current_app.config["POSTS_PER_PAGE"], True)
 
-  return render_template("profile.html", author=user, posts=posts)
+  return render_template("profile/profile.html", author=user, posts=posts)
 
 @profile.route('/<username>/settings', methods=['GET', 'POST'])
 @fresh_login_required
@@ -69,7 +69,7 @@ def settings(username):
       flash('Data updated successfully!', category='success')
       return redirect(url_for("profile.prof", username=user.username))
 
-  return render_template("settings.html", author=current_user)
+  return render_template("profile/settings.html", author=current_user)
 
 @profile.route("/<username>/followers")
 def followers(username):
@@ -78,7 +78,7 @@ def followers(username):
   user = User.query.filter_by(username=username).first_or_404()
   followers = user.followers.paginate(page, current_app.config["POSTS_PER_PAGE"], True)
 
-  return render_template("followers.html", followers=followers, author=user)
+  return render_template("profile/followers.html", followers=followers, author=user)
 
 @profile.route("/<username>/following")
 def following(username):
@@ -87,7 +87,7 @@ def following(username):
   user = User.query.filter_by(username=username).first_or_404()
   following = user.followed.paginate(page, current_app.config["POSTS_PER_PAGE"], True)
 
-  return render_template("following.html", following=following, author=user)
+  return render_template("profile/following.html", following=following, author=user)
 
 @profile.route("/<username>/follow", methods=["POST"])
 @login_required
@@ -158,4 +158,4 @@ def delete_confirm(username, token):
     flash('Account deleted successfully!', category='success')
     return redirect(url_for('home.index'))
 
-  return render_template("deleteacc.html", author=user)
+  return render_template("profile/deleteacc.html", author=user)

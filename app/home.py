@@ -64,15 +64,15 @@ def index():
     data = {}
     default = True
 
-  return render_template("home.html", **data, default=default)
+  return render_template("main/home.html", **data, default=default)
 
 @home.route("/about")
 def about():
-  return render_template("about.html")
+  return render_template("main/about.html")
 
 @home.route("/contact")
 def contact():
-  return render_template("contact.html")
+  return render_template("main/contact.html")
   
 @home.route("/sitemap")
 @home.route("/sitemap.xml")
@@ -97,7 +97,7 @@ def sitemap():
     url = server_name + url_for('post.pst', username=post.author.username, title=post.title)
     pages.append([url, lastmod])
 
-  sitemap_template = render_template('sitemap.xml', pages=pages)
+  sitemap_template = render_template('main/sitemap.xml', pages=pages)
   response = make_response(sitemap_template)
   response.headers['Content-Type'] = 'application/xml'
   return response

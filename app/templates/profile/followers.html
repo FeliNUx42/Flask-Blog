@@ -1,9 +1,9 @@
-{% extends "profile.html" %}
+{% extends "profile/profile.html" %}
 
 {% block title %}Followers - {{ author.username }}{% endblock %}
 
 {% block data %}
 <h1>{{ author.username}} - Followers ({{ followers.total }})</h1>
 {% set users = followers %}
-{% include "user_banners.html" %}
+{% include "layout/user_banners.html" %}
 {% endblock %}

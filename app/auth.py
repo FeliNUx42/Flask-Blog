@@ -27,7 +27,7 @@ def login():
     else:
       flash('Incorrect Username or Password.', category='error')
     
-  return render_template("login.html")
+  return render_template("auth/login.html")
 
 
 @auth.route('/signup', methods=['GET', 'POST'])
@@ -77,7 +77,7 @@ def signup():
       return redirect(url_for("auth.unconfirmed", username=new_user.username))
 
 
-  return render_template('signup.html')
+  return render_template('auth/signup.html')
 
 
 @auth.route('/logout', methods=['GET', 'POST'])
@@ -100,7 +100,7 @@ def reset_request():
     flash('An email has been sent with instructions to reset your password.', category='success')
     return redirect(url_for('auth.login'))
 
-  return render_template("reset_password.html")
+  return render_template("auth/reset_password.html")
 
 @auth.route('/reset-password/<token>', methods=['GET', 'POST'])
 def reset_token(token):
@@ -127,14 +127,14 @@ def reset_token(token):
       flash('Your password has been updated! Your are now able to log in.', category='success')
       return redirect(url_for("auth.login"))
   
-  return render_template('reset_token.html')
+  return render_template('auth/reset_token.html')
 
 @auth.route('/confirm')
 @login_required
 def unconfirmed():
   if current_user.confirmed:
     return redirect(url_for("profile.prof", username=current_user.username))
-  return render_template('unconfirmed.html')
+  return render_template('auth/unconfirmed.html')
 
 @auth.route('/confirm/<token>')
 @login_required

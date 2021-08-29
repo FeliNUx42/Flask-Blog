@@ -1,9 +1,9 @@
-{% extends "profile.html" %}
+{% extends "profile/profile.html" %}
 
-{% block title %}Create - {{ current_user.username }}{% endblock %}
+{% block title %}Edit - {{ current_user.username }}{% endblock %}
 
 {% block data %}
-<h1>Create new Post</h1>
+<h1>Editing Post</h1>
 
 <form method="POST">
   <div class="tab-bar">
@@ -11,21 +11,18 @@
     <button type="button" class="" onclick="changeMode(this, 'tab-preview')">Preview</button>
   </div>
   <div class="tab-inputs tab-active tab-window">
-    <div>
-      <label for="title">Title</label>
-      <input type="text" name="title" id="title">
-    </div>
+    <input type="hidden" name="title" id="title" value="{{ post.title }}">
     <div>
       <label for="description">Description</label>
-      <textarea name="description" id="description"></textarea>
+      <textarea name="description" id="description">{{ post.description }}</textarea>
     </div>
     <div>
       <label for="data">Content (<a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a>)</label>
-      <textarea name="data" id="data" onkeydown="autoGrow(this)"></textarea>
+      <textarea name="data" id="data" onkeydown="autoGrow(this)">{{ post.content }}</textarea>
     </div>
   </div>
   <div class="tab-preview tab-window"></div>
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-  <button type="submit">Create</button>
+  <button type="submit">Edit</button>
 </form>
 {% endblock %}

@@ -12,7 +12,7 @@ def pst(username, title):
   user = User.query.filter_by(username=username).first_or_404()
   post = Post.query.filter_by(title=title, author=user).first_or_404()
 
-  return render_template("post.html",  author=user, post=post)
+  return render_template("post/post.html",  author=user, post=post)
 
 @post.route('/<username>/create', methods=["GET", "POST"])
 @login_required
@@ -45,7 +45,7 @@ def create(username):
       return redirect(url_for("post.pst", username=user.username, title=title))
 
 
-  return render_template("create.html", author=current_user)
+  return render_template("post/create.html", author=current_user)
 
 @post.route('/<username>/<title>/edit', methods=["GET", "POST"])
 @login_required
@@ -76,7 +76,7 @@ def edit(username, title):
       flash('Post edited!', category='success')
       return redirect(url_for("post.pst", username=user.username, title=title))
 
-  return render_template("edit.html", author=current_user, post=post)
+  return render_template("post/edit.html", author=current_user, post=post)
 
 @post.route('/<username>/<title>/delete', methods=["GET", "POST"])
 @login_required
@@ -99,4 +99,4 @@ def delete(username, title):
     flash('Post deleted successfully!', category='success')
     return redirect(url_for('profile.prof', username=user.username))
 
-  return render_template("delete.html", author=current_user, post=post)
+  return render_template("post/delete.html", author=current_user, post=post)

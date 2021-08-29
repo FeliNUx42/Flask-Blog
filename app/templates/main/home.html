@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layout/base.html" %}
 
 {% block title %}Home{% endblock %}
 
@@ -21,19 +21,19 @@
 </div>
 <div class="tab-window tab-username tab-active">
   {% set users =  username%}
-  {% include "user_banners.html" %}
+  {% include "layout/user_banners.html" %}
 </div>
 <div class="tab-window tab-user-desc">
   {% set users =  user_description%}
-  {% include "user_banners.html" %}
+  {% include "layout/user_banners.html" %}
 </div>
 <div class="tab-window tab-post-title">
   {% set posts =  post_title%}
-  {% include "post_banners.html" %}
+  {% include "layout/post_banners.html" %}
 </div>
 <div class="tab-window tab-post-content">
   {% set posts =  post_content%}
-  {% include "post_banners.html" %}
+  {% include "layout/post_banners.html" %}
 </div>
 {% endif %}
 {% endblock %}
