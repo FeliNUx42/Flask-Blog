@@ -76,7 +76,7 @@ def create_app():
   app.register_blueprint(post)
   app.register_blueprint(errors)
   app.register_blueprint(api)
-
+  
   return app
 
 
