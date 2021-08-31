@@ -2,7 +2,9 @@ from enum import auto
 from flask import Blueprint, render_template, request, flash, redirect, url_for, abort, current_app
 from flask_login import login_required, current_user, fresh_login_required, logout_user
 from .models import User, Post
-from . import confirmed_required, db, valid_type, save_file, valid_username, send_delete_email
+from .email import send_delete_email
+from .utils import valid_type, save_file, valid_username, confirmed_required
+from . import db
 
 profile = Blueprint('profile', __name__)
 
@@ -61,7 +63,7 @@ def settings(username):
       f = request.files['profilePic']
       if f.filename:
         if not valid_type(f.filename):
-          flash(f"'{f.filename}' is not a valid filetype. Only .png, .jpg and .jpeg are accepted.")
+          flash(f"'{f.filename}' is not a valid filetype. Only .png, .jpg and .jpeg are accepted.", category="error")
         else:
           filename = save_file(f)
           user.profile_pic = filename

@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
 from flask_login import login_required, current_user, logout_user, login_user
 from .models import User
-from . import db, valid_username, recaptcha, send_reset_email, send_confirm_email
+from .email import send_reset_email, send_confirm_email
+from .utils import valid_username
+from . import db, recaptcha
 
 
 auth = Blueprint('auth', __name__)

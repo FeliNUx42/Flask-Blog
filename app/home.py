@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, request, session, current_app, mak
 from datetime import datetime, timedelta
 from sqlalchemy import or_
 from .models import User, Post
+from .utils import markdown
+from . import csrf
 
 
 home = Blueprint('home', __name__)
@@ -73,6 +75,13 @@ def about():
 @home.route("/contact")
 def contact():
   return render_template("main/contact.html")
+
+@home.route("/markdown", methods=["POST"])
+@csrf.exempt
+def mark():
+  if not request.form.get("data"):
+    return "<i>empty</i>"
+  return markdown(request.form.get("data"))
   
 @home.route("/sitemap")
 @home.route("/sitemap.xml")

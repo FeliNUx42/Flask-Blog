@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, abort
 from flask_login import login_required, current_user
 from .models import User, Post
-from . import db, valid_title, confirmed_required
+from .utils import valid_title, confirmed_required
+from . import db
 
 
 post = Blueprint('post', __name__)
