@@ -1,6 +1,6 @@
-from enum import auto
 from flask import Blueprint, render_template, request, flash, redirect, url_for, abort, current_app
 from flask_login import login_required, current_user, fresh_login_required, logout_user
+from os import path, remove
 from .models import User, Post
 from .email import send_delete_email
 from .utils import valid_type, save_file, valid_username, confirmed_required
@@ -158,6 +158,10 @@ def delete_confirm(username, token):
       db.session.delete(p)
     db.session.delete(user)
     db.session.commit()
+
+    img_path = path.join(current_app.root_path, current_app.config["PROFILE_PICTURE_FOLDER"], user.profile_pic)
+    remove(img_path)
+
     flash('Account deleted successfully!', category='success')
     return redirect(url_for('home.index'))
 

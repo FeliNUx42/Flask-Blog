@@ -71,9 +71,9 @@ def signup():
       flash('Password must be longer than 7 characters.', category='error')
     else:
       new_user = User(email=email, username=username, description=description, first_name=firstName, last_name=lastName, password=password1)
-      send_confirm_email(new_user)
       db.session.add(new_user)
       db.session.commit()
+      send_confirm_email(new_user)
       flash('Account created! A confirmation email has been sent.', category='success')
       login_user(new_user, remember=True)
       return redirect(url_for("auth.unconfirmed", username=new_user.username))
