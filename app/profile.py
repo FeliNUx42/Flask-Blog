@@ -2,7 +2,7 @@ from enum import auto
 from flask import Blueprint, render_template, request, flash, redirect, url_for, abort, current_app
 from flask_login import login_required, current_user, fresh_login_required, logout_user
 from .models import User, Post
-from . import confirmed_required, db, valid_type, custom_filename, valid_username, send_delete_email
+from . import confirmed_required, db, valid_type, save_file, valid_username, send_delete_email
 
 profile = Blueprint('profile', __name__)
 
@@ -13,7 +13,7 @@ def prof(username):
   user = User.query.filter_by(username=username).first_or_404()
   posts = Post.query.filter_by(author=user).order_by(Post.created.desc())\
     .paginate(page, current_app.config["POSTS_PER_PAGE"], True)
-
+  
   return render_template("profile/profile.html", author=user, posts=posts)
 
 @profile.route('/<username>/settings', methods=['GET', 'POST'])
@@ -30,6 +30,7 @@ def settings(username):
     description = request.form.get("description")
     firstName = request.form.get("firstName")
     lastName = request.form.get("lastName")
+    public_email = request.form.get("public-email")
 
     if not description:
       description = "No description..."
@@ -47,6 +48,7 @@ def settings(username):
       user.description = description
       user.first_name = firstName
       user.last_name = lastName
+      user.public_email = bool(public_email)
 
       if request.form.get("activate-pwd") == "on":
         if request.form.get("password1") != request.form.get("password2"):
@@ -61,8 +63,7 @@ def settings(username):
         if not valid_type(f.filename):
           flash(f"'{f.filename}' is not a valid filetype. Only .png, .jpg and .jpeg are accepted.")
         else:
-          filename = custom_filename(f.filename)
-          f.save(current_app.config['PROFILE_PICTURE_FOLDER'] + filename)
+          filename = save_file(f)
           user.profile_pic = filename
     
       db.session.commit()

@@ -27,6 +27,7 @@ class Post(db.Model):
 class User(db.Model, UserMixin):
   id = db.Column(db.Integer, primary_key=True)
   email = db.Column(db.String(128), unique=True)
+  public_email = db.Column(db.Boolean, default=True)
   username = db.Column(db.String(128), unique=True)
   first_name = db.Column(db.String(128))
   last_name = db.Column(db.String(128))

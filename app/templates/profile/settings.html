@@ -10,13 +10,17 @@
     <label for="username">Username</label>
     <input type="text"  id="username" name="username" placeholder="Enter username" value="{{ current_user.username }}">
   </div>
+  <div class="checkbox-div">
+    <label for="public-email">Make email address public: </label>
+    <input type="checkbox" name="public-email" id="public-email" {{ "checked" if current_user.public_email }}>
+  </div>
   <div>
     <label for="description">Description</label>
     <textarea name="description" id="description">{{ current_user.description }}</textarea>
   </div>
   <div>
     <label for="profilePic">Profile Picture</label>
-    <input type="file" name="profilePic" id="">
+    <input type="file" name="profilePic" id="profilePic">
   </div>
   <div>
     <label for="firstName">First Name</label>
@@ -26,7 +30,7 @@
     <label for="lastName">Last Name</label>
     <input type="text"  id="lastName" name="lastName" placeholder="Enter last name" value="{{ current_user.last_name }}">
   </div>
-  <div id="change-pwd">
+  <div id="change-pwd" class="checkbox-div">
     <label for="activate-pwd" id="activate-pwd-label">Change Password: </label>
     <input type="checkbox" name="activate-pwd" id="activate-pwd">
   </div>

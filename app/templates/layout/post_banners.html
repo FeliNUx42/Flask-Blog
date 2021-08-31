@@ -9,6 +9,9 @@
     <h1>{{ post.title }}</h1>
     <div class="post-banner-links">
       {% if post.author != current_user %}
+      <div>
+        Posted on <b>{{ moment(post.created).format("DD MMMM, YYYY") }}</b>
+      </div>
       <a href="{{ url_for('profile.prof', username=post.author.username) }}" class="no-style"><figure><img src="{{ url_for('static', filename='profile_pictures/'+post.author.profile_pic) }}" alt="Profile"></figure>
       <p>{{ post.author.username }}</p></a>
       {% else %}
@@ -18,7 +21,7 @@
     </div>
   </div>
   <hr>
-  <p class="post-banner-description read-more">{{ post.description }} - <b>{{ moment(post.created).format("DD MMMM, YYYY") }}</b></p>
+  <p class="post-banner-description read-more">{{ post.description }}</p>
 </div>
 {% endfor %}
 <div class="pagination">

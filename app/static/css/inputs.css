@@ -91,12 +91,16 @@ h3 {
   margin-bottom: 1rem;
 }
 
-#change-pwd {
+#content form .checkbox-div {
   display: flex;
   justify-content: start;
 }
 
-#change-pwd #activate-pwd{
+#content form .checkbox-div label {
+  margin-top: 4px;
+}
+
+#content form input[type="checkbox"] {
   margin-left: 20px;
 
   font-size: 30px;
@@ -113,11 +117,11 @@ h3 {
   transition: all .2s ease-in-out;
   }
   
-  #change-pwd #activate-pwd:checked{
+#content form input[type="checkbox"]:checked {
   background: #0ebeff;
 }
   
-#change-pwd #activate-pwd:after{
+#content form input[type="checkbox"]:after{
   position: absolute;
   content: "";
   width: 30px;
@@ -133,7 +137,7 @@ h3 {
   transition: all .2s ease-in-out;
 }
   
-#change-pwd #activate-pwd:checked:after{
+#content form input[type="checkbox"]:checked:after{
   left: calc(100% - 30px);
 }
 

@@ -1,6 +1,7 @@
 from flask import Flask, session, request, current_app, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from os import path
+from PIL import Image
 from uuid import uuid4
 from functools import wraps
 from flask_login import LoginManager, current_user
@@ -42,6 +43,7 @@ def create_app():
     return {
       "markdown": markdown,
       "len": len,
+      "str": str,
       "app": app
     }
 
@@ -79,17 +81,24 @@ def create_app():
 
 
 def valid_type(filename):
-  print(filename)
   extensions = (".png", ".jpg", ".jpeg")
   for ext in extensions:
-    print(ext)
     if filename.endswith(ext):
       return True
   return False
 
-def custom_filename(filename):
-  _, ext = path.splitext(filename)
-  return uuid4().hex + ext
+def save_file(form_pic):
+  hex = uuid4().hex
+  _, ext = path.splitext(form_pic.filename)
+  picture_fn = hex + ext
+  picture_path = path.join(current_app.root_path, current_app.config["PROFILE_PICTURE_FOLDER"], picture_fn)
+
+  output_size = (200, 200)
+  i = Image.open(form_pic)
+  i.thumbnail(output_size)
+  i.save(picture_path)
+
+  return picture_fn
 
 def valid_username(username, id=0):
   from .models import User

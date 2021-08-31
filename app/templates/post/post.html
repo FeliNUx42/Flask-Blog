@@ -8,6 +8,9 @@
     <h1>{{ post.title }}</h1>
     <div class="post-banner-links">
       {% if post.author != current_user %}
+      <div>
+        Posted on <b>{{ moment(post.created).format("DD MMMM, YYYY") }}</b>
+      </div>
       <figure><img src="{{ url_for('static', filename='profile_pictures/'+post.author.profile_pic) }}" alt="Profile"></figure>
       <p>{{ post.author.username }}</p>
       {% else %}
@@ -17,7 +20,7 @@
     </div>
   </div>
   <hr>
-  <p class="post-banner-description">{{ post.description }} - <b>{{ moment(post.created).format("DD MMMM, YYYY") }}</b></p>
+  <p class="post-banner-description">{{ post.description }}</p>
 </div>
 <div class="markdown-body">
   {{ markdown(post.content) | safe }}

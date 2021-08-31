@@ -9,6 +9,7 @@
     <div>
       <h1>{{ author.username }}</h1>
       <p>{{ author.first_name }} {{ author.last_name }}</p>
+      {% if author.public_email and author != current_user %}<a href="mailto: {{ author.email }}" class="contact">Send email</a>{% endif %}
     </div>
     <div class="profile-banner-links">
       <a class="light" href="{{ url_for('profile.followers', username=author.username) }}">Followers ({{ author.followers.count() }})</a>
