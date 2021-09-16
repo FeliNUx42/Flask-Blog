@@ -14,26 +14,30 @@
 {% else %}
 <h1>Search results for '{{ search }}':</h1>
 <div class="tab-bar">
-  <button type="button" class="tab-active" onclick="changeMode(this, 'tab-username')">Users ({{ username.total }})</button>
-  <button type="button" class="" onclick="changeMode(this, 'tab-user-desc')">User Descriptions ({{ user_description.total }})</button>
-  <button type="button" class="" onclick="changeMode(this, 'tab-post-title')">Posts ({{ post_title.total }})</button>
-  <button type="button" class="" onclick="changeMode(this, 'tab-post-content')">Post Contents ({{ post_content.total }})</button>
+  <button type="button" class="{{ tab == 'username' and 'tab-active' or '' }}" onclick="changeMode(this, 'tab-username')">Users ({{ username.total }})</button>
+  <button type="button" class="{{ tab == 'user_desc' and 'tab-active' or '' }}" onclick="changeMode(this, 'tab-user-desc')">User Descriptions ({{ user_description.total }})</button>
+  <button type="button" class="{{ tab == 'post_title' and 'tab-active' or '' }}" onclick="changeMode(this, 'tab-post-title')">Posts ({{ post_title.total }})</button>
+  <button type="button" class="{{ tab == 'post_desc' and 'tab-active' or '' }}" onclick="changeMode(this, 'tab-post-content')">Post Contents ({{ post_content.total }})</button>
 </div>
 {% set _username = "" %}
-<div class="tab-window tab-username tab-active">
+<div class="tab-window tab-username {{ tab == 'username' and 'tab-active' or '' }}">
   {% set users =  username%}
+  {% set _tab = "username" %}
   {% include "layout/user_banners.html" %}
 </div>
-<div class="tab-window tab-user-desc">
+<div class="tab-window tab-user-desc {{ tab == 'user_desc' and 'tab-active' or '' }}">
   {% set users =  user_description%}
+  {% set _tab = "user_desc" %}
   {% include "layout/user_banners.html" %}
 </div>
-<div class="tab-window tab-post-title">
+<div class="tab-window tab-post-title {{ tab == 'post_title' and 'tab-active' or '' }}">
   {% set posts =  post_title%}
+  {% set _tab = "post_title" %}
   {% include "layout/post_banners.html" %}
 </div>
-<div class="tab-window tab-post-content">
+<div class="tab-window tab-post-content {{ tab == 'post_desc' and 'tab-active' or '' }}">
   {% set posts =  post_content%}
+  {% set _tab = "post_desc" %}
   {% include "layout/post_banners.html" %}
 </div>
 {% endif %}

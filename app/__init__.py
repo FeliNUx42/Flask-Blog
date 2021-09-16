@@ -41,6 +41,7 @@ def create_app():
       "markdown": markdown,
       "len": len,
       "str": str,
+      "tab": "",
       "app": app
     }
 
@@ -48,7 +49,7 @@ def create_app():
   def check_session():
     if request.endpoint == "home.index": return
     if request.endpoint == "static": return
-    
+
     if session.get("SEARCH_QUERY"):
       del session["SEARCH_QUERY"]
 

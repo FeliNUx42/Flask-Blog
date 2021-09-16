@@ -19,7 +19,7 @@ home = Blueprint('home', __name__)
 """
 
 
-def get_posts(search, order_by, per_page, page):
+def get_posts(search, order_by, per_page, pages):
   username = User.query.filter(User.username.ilike(f'%{search}%'))
   user_desc = User.query.filter(User.description.ilike(f'%{search}%'))
   post_title = Post.query.filter(Post.title.ilike(f'%{search}%'))
@@ -36,10 +36,10 @@ def get_posts(search, order_by, per_page, page):
     post_title = post_title.order_by(Post.created.asc())
     post_content = post_content.order_by(Post.created.asc())
   
-  username = username.paginate(page, per_page, False)
-  user_desc = user_desc.paginate(page, per_page, False)
-  post_title = post_title.paginate(page, per_page, False)
-  post_content = post_content.paginate(page, per_page, False)
+  username = username.paginate(pages["username"], per_page, True)
+  user_desc = user_desc.paginate(pages["user_desc"], per_page, True)
+  post_title = post_title.paginate(pages["post_title"], per_page, True)
+  post_content = post_content.paginate(pages["post_content"], per_page, True)
 
   return {
     "username": username,
@@ -53,19 +53,27 @@ def get_posts(search, order_by, per_page, page):
 def index():
   search = request.args.get("search")
   page = request.args.get("page", 1, type=int)
+  tab = request.args.get("tab", "username")
   order_by = request.args.get("order-by", "latest")
   per_page = request.args.get("per-page", current_app.config['POSTS_PER_PAGE'], type=int)
   default = False
 
   if search is not None or request.args.get("order-by") or request.args.get("per-page"):
-    session["SEARCH_QUERY"] = {"search":search, "order_by":order_by, "per_page":per_page}
+    if session.get("SEARCH_QUERY"):
+      session["SEARCH_QUERY"]["pages"][tab] = page
+      pages = session["SEARCH_QUERY"]["pages"]
+    else:
+      pages = {"username": 1, "user_desc":1, "post_title":1, "post_content":1}
+    session["SEARCH_QUERY"] = {"search":search, "order_by":order_by, "per_page":per_page, "pages":pages}
   if session.get("SEARCH_QUERY"):
-    data = get_posts(**session["SEARCH_QUERY"], page=page)
+    session["SEARCH_QUERY"]["pages"][tab] = page
+
+    data = get_posts(**session["SEARCH_QUERY"])
   else:
     data = {}
     default = True
 
-  return render_template("main/home.html", **data, default=default)
+  return render_template("main/home.html", **data, default=default, tab=tab)
 
 @home.route("/about")
 def about():
