@@ -33,6 +33,7 @@
 
 {% block data %}
 <h1>Posts by {{ author.username }} ({{ len(author.posts) }})</h1>
+{% set _username = author.username %}
 {% include "layout/post_banners.html" %}
 </div>
 {% endblock %}

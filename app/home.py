@@ -19,7 +19,7 @@ home = Blueprint('home', __name__)
 """
 
 
-def get_posts(search, order_by, per_page, page=1):
+def get_posts(search, order_by, per_page, page):
   username = User.query.filter(User.username.ilike(f'%{search}%'))
   user_desc = User.query.filter(User.description.ilike(f'%{search}%'))
   post_title = Post.query.filter(Post.title.ilike(f'%{search}%'))
@@ -36,10 +36,10 @@ def get_posts(search, order_by, per_page, page=1):
     post_title = post_title.order_by(Post.created.asc())
     post_content = post_content.order_by(Post.created.asc())
   
-  username = username.paginate(page, per_page, True)
-  user_desc = user_desc.paginate(page, per_page, True)
-  post_title = post_title.paginate(page, per_page, True)
-  post_content = post_content.paginate(page, per_page, True)
+  username = username.paginate(page, per_page, False)
+  user_desc = user_desc.paginate(page, per_page, False)
+  post_title = post_title.paginate(page, per_page, False)
+  post_content = post_content.paginate(page, per_page, False)
 
   return {
     "username": username,
@@ -57,11 +57,10 @@ def index():
   per_page = request.args.get("per-page", current_app.config['POSTS_PER_PAGE'], type=int)
   default = False
 
-  if search is not None or request.args.get("page") \
-    or request.args.get("order-by") or request.args.get("per-page"):
-    session["SEARCH_QUERY"] = {"search":search, "order_by":order_by, "per_page":per_page, "page":page}
+  if search is not None or request.args.get("order-by") or request.args.get("per-page"):
+    session["SEARCH_QUERY"] = {"search":search, "order_by":order_by, "per_page":per_page}
   if session.get("SEARCH_QUERY"):
-    data = get_posts(**session["SEARCH_QUERY"])
+    data = get_posts(**session["SEARCH_QUERY"], page=page)
   else:
     data = {}
     default = True

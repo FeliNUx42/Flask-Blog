@@ -19,6 +19,7 @@
   <button type="button" class="" onclick="changeMode(this, 'tab-post-title')">Posts ({{ post_title.total }})</button>
   <button type="button" class="" onclick="changeMode(this, 'tab-post-content')">Post Contents ({{ post_content.total }})</button>
 </div>
+{% set _username = "" %}
 <div class="tab-window tab-username tab-active">
   {% set users =  username%}
   {% include "layout/user_banners.html" %}

@@ -5,5 +5,6 @@
 {% block data %}
 <h1>{{ author.username}} - Following ({{ following.total }})</h1>
 {% set users = following %}
+{% set _username = author.username %}
 {% include "layout/user_banners.html" %}
 {% endblock %}
