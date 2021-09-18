@@ -15,7 +15,7 @@ def send_reset_email(user):
   
   token = user.get_token(command="reset-password")
   
-  msg = Message("Password Reset Request", sender="noreply@blogopedia.com", recipients=[user.email])
+  msg = Message("Password Reset Request", sender="noreply@felix-blogopedia.herokuapp.com", recipients=[user.email])
   with current_app.app_context(), current_app.test_request_context():
     msg.body = f"""To reset your password, please visit the following link:
 { get_link("reset-password", token) }
@@ -27,7 +27,7 @@ If you did not make this request then simply ignore this email and no changes wi
 def send_confirm_email(user):
   token = user.get_token(command="confirm-account")
   
-  msg = Message("Welcome to Blogopedia", sender="noreply@blogopedia.com", recipients=[user.email])
+  msg = Message("Welcome to Blogopedia", sender="noreply@felix-blogopedia.herokuapp.com", recipients=[user.email])
   with current_app.app_context(), current_app.test_request_context():
     msg.body = f"""To confirm your email for the account, please visit the following link:
 { get_link("confirm", token) }
@@ -39,7 +39,7 @@ If you did not create an account then simply ignore this email and no changes wi
 def send_delete_email(user):
   token = user.get_token(command="delete-account")
   
-  msg = Message("Leave Blogopedia", sender="noreply@blogopedia.com", recipients=[user.email])
+  msg = Message("Leave Blogopedia", sender="noreply@felix-blogopedia.herokuapp.com", recipients=[user.email])
   with current_app.app_context(), current_app.test_request_context():
     msg.body = f"""To delete your account for the account, please visit the following link:
 { get_link(user.username+"/delete-account", token) }
