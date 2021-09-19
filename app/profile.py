@@ -143,7 +143,7 @@ def delete_confirm(username, token):
   user, command = User.verify_token(token)
   if user is None or command != 'delete-account':
     flash('That is an expired or invalid token.', category='error')
-    return redirect(url_for('profile.delete-account', username=_user.username))
+    return redirect(url_for('profile.deleteacc', username=_user.username))
   
   if user != current_user or user != _user:
     abort(403)
@@ -160,7 +160,8 @@ def delete_confirm(username, token):
     db.session.commit()
 
     img_path = path.join(current_app.root_path, current_app.config["PROFILE_PICTURE_FOLDER"], user.profile_pic)
-    remove(img_path)
+    if not img_path.endswith("/default.png"):
+      remove(img_path)
 
     flash('Account deleted successfully!', category='success')
     return redirect(url_for('home.index'))
